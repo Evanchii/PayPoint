@@ -8,7 +8,7 @@
     tools:context="xyz.paypnt.paypoint.MainActivity">
 
     <LinearLayout
-        android:id="@+id/main_banner"
+        android:id="@+id/signup_banner"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="#2b2b2b"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_banner">
+        app:layout_constraintTop_toBottomOf="@+id/signup_banner">
 
         <Button
             android:id="@+id/main_login"

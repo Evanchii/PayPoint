@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.paypoint.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,7 @@ public class Signup extends AppCompatActivity {
     private EditText userEmail;
     private EditText password;
     private EditText confirmPassword;
+    private TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class Signup extends AppCompatActivity {
 
         mAut=FirebaseAuth.getInstance();
         fdb = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        error = (TextView) findViewById(R.id.signup_error);
 
         Button signIn=(Button)findViewById(R.id.signup_signup);
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +64,8 @@ public class Signup extends AppCompatActivity {
         password=(EditText)findViewById(R.id.signup_password);
         confirmPassword=(EditText)findViewById(R.id.signup_confirm);
 
-        if (userUsername !=null && userEmail !=null && password!=null && confirmPassword !=null ){
+        if (!userUsername.getText().toString().trim().equals("") && !userEmail.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("") && !confirmPassword.getText().toString().trim().equals("") ){
+            System.out.print(userUsername.getText());
             if(String.valueOf(password.getText()).equals(String.valueOf(confirmPassword.getText()))){
 
                 SignUpGetterAndSetter sign = new SignUpGetterAndSetter();
@@ -87,9 +93,13 @@ public class Signup extends AppCompatActivity {
 
             }else {
                 System.out.println("Error Password");
+                error.setText("Password didn't match");
+                error.setVisibility(View.VISIBLE);
             }
         }else{
             System.out.println("Error Empty");
+            error.setText("Enter all required data!");
+            error.setVisibility(View.VISIBLE);
         }
 
     }
