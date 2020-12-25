@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.paypoint.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,8 @@ public class Login extends AppCompatActivity {
     private EditText login_email;
     private EditText login_password;
 
+    private TextView error;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,8 @@ public class Login extends AppCompatActivity {
 
         mAuth=FirebaseAuth.getInstance();
         loginDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        error = (TextView) findViewById(R.id.login_error);
 
         Button login=(Button)findViewById(R.id.login_login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -72,21 +77,19 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent( Login.this ,Dashboard.class);
                                     startActivity(intent);
 
-
-
                                 }else{
                                     System.out.println("You dont have Account yet");
+                                    error.setText("Account doesn't exist!");
+                                    error.setVisibility(View.VISIBLE);
                                 }
                             }
-
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
+                            public void onCancelled(@NonNull DatabaseError error) {}
                         });
-
                     }else {
                         System.out.println("Error Login");
+                        error.setText("Wrong Email/Password");
+                        error.setVisibility(View.VISIBLE);
                     }
                 }
             });

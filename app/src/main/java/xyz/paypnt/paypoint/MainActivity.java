@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         Signup = (Button) findViewById(R.id.main_signup);
 
         Login.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this,Login.class));
+            startActivity(new Intent(MainActivity.this,Dashboard.class));
             finish();
         });
         Signup.setOnClickListener(v -> {
