@@ -12,6 +12,7 @@
         <activity android:name="xyz.paypnt.paypoint.Dashboard"></activity>
         <activity android:name="xyz.paypnt.paypoint.Signup" />
         <activity android:name="xyz.paypnt.paypoint.Login" />
+        <activity android:name="xyz.paypnt.paypoint.Password" />
         <activity android:name="xyz.paypnt.paypoint.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
