@@ -14,7 +14,6 @@
         android:background="#2b2b2b"
         android:gravity="center"
         android:orientation="vertical"
-        android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,21 +24,21 @@
             android:layout_height="100dp"
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/logo"
-            app:srcCompat="@drawable/black_inside_logo" />
+            app:srcCompat="@drawable/logo" />
 
         <ImageView
             android:id="@+id/main_logotext"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:contentDescription="@string/text_logo"
-            app:srcCompat="@drawable/logo_text" />
+            app:srcCompat="@drawable/text_logo_yellow" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="#2b2b2b"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,23 +48,30 @@
 
         <Button
             android:id="@+id/main_login"
-            android:layout_width="125dp"
+            android:layout_width="200dp"
             android:layout_height="42dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/btn_roundcorner"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="@color/white"
+            android:elevation="10dp"
             android:fontFamily="@font/main_font"
             android:text="@string/login"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:theme="@style/Button.White" />
 
         <Button
             android:id="@+id/main_signup"
-            android:layout_width="125dp"
+            android:layout_width="200dp"
             android:layout_height="42dp"
-            android:background="@drawable/btn_roundcorner"
+            android:backgroundTint="@color/white"
+            android:elevation="10dp"
             android:fontFamily="@font/main_font"
             android:text="@string/signup"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textColor="#000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:theme="@style/Button.White" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
