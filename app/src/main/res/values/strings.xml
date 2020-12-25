@@ -10,4 +10,11 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="login_signup">Don\'t have an account? Signup!</string>
     <string name="signup_login">Already have an account? Login!</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
 </resources>
