@@ -1,4 +1,4 @@
-package com.example.paypoint;
+package xyz.paypnt.paypoint;
 
 import org.junit.Test;
 

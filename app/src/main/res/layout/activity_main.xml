@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="xyz.paypnt.paypoint.MainActivity">
 
     <LinearLayout
         android:id="@+id/main_banner"

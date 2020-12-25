@@ -1,4 +1,4 @@
-package com.example.paypoint;
+package xyz.paypnt.paypoint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
+
+import com.example.paypoint.R;
 
 public class Splashscreen extends AppCompatActivity {
 

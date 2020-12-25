@@ -9,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PayPoint">
-        <activity android:name=".Dashboard"></activity>
-        <activity android:name=".Signup" />
-        <activity android:name=".Login" />
-        <activity android:name=".Splashscreen">
+        <activity android:name="xyz.paypnt.paypoint.Dashboard"></activity>
+        <activity android:name="xyz.paypnt.paypoint.Signup" />
+        <activity android:name="xyz.paypnt.paypoint.Login" />
+        <activity android:name="xyz.paypnt.paypoint.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name="xyz.paypnt.paypoint.MainActivity" />
     </application>
 
 </manifest>

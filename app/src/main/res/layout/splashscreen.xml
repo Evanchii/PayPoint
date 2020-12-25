@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#2B2B2B"
     android:orientation="vertical"
-    tools:context=".Splashscreen" >
+    tools:context="xyz.paypnt.paypoint.Splashscreen" >
 
     <ImageView
         android:id="@+id/imageView"
