@@ -4,15 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/main_banner"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#2b2b2b"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/logo"
+            app:srcCompat="@drawable/black_inside_logo" />
+
+        <ImageView
+            android:id="@+id/main_logotext"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:contentDescription="@string/text_logo"
+            app:srcCompat="@drawable/logo_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_banner">
+
+        <Button
+            android:id="@+id/main_login"
+            android:layout_width="125dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_roundcorner"
+            android:fontFamily="@font/main_font"
+            android:text="@string/login"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_signup"
+            android:layout_width="125dp"
+            android:layout_height="42dp"
+            android:background="@drawable/btn_roundcorner"
+            android:fontFamily="@font/main_font"
+            android:text="@string/signup"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
