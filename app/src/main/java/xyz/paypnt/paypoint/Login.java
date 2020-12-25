@@ -1,8 +1,10 @@
 package xyz.paypnt.paypoint;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +12,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.paypoint.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,5 +100,38 @@ public class Login extends AppCompatActivity {
             });
 
         }
+    }
+
+    public void forgotPassword(View view) {
+        EditText reset = new EditText(view.getContext());
+        AlertDialog.Builder resetDialog = new AlertDialog.Builder(view.getContext());
+        resetDialog.setTitle("Password Reset");
+        resetDialog.setMessage("Enter your email");
+        resetDialog.setView(reset);
+
+        resetDialog.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String email = reset.getText().toString().trim();
+                mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Login.this, "Password Reset Email sent!", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Login.this, "An error has occured!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        resetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        resetDialog.create().show();
     }
 }
