@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_dashboard"
+        android:orderInCategory="100"
+        android:title="Dashboard"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_history"
+        android:orderInCategory="100"
+        android:title="History"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_password"
+        android:orderInCategory="100"
+        android:title="Password"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_use"
+        android:orderInCategory="100"
+        android:title="How to use?"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_aboutUs"
+        android:orderInCategory="100"
+        android:title="About Us"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logOut"
+        android:orderInCategory="100"
+        android:title="Log Out"
+        app:showAsAction="never" />
+
+</menu>
