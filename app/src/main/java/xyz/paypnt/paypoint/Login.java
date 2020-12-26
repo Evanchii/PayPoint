@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
         login_email=(EditText)findViewById(R.id.login_email);
         login_password=(EditText)findViewById(R.id.login_password);
 
-        if(login_email.getText()!=null && login_password !=null){
+        if(!login_email.getText().toString().trim().equals("") && !login_password.getText().toString().trim().equals("")){
             mAuth.signInWithEmailAndPassword(String.valueOf(login_email.getText()),String.valueOf(login_password.getText())).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,7 +83,7 @@ public class Login extends AppCompatActivity {
                                     startActivity(intent);
 
                                 }else{
-                                    System.out.println("You dont have Account yet");
+                                    System.out.println("You don't have Account yet");
                                     error.setText("Account doesn't exist!");
                                     error.setVisibility(View.VISIBLE);
                                 }
@@ -99,6 +99,10 @@ public class Login extends AppCompatActivity {
                 }
             });
 
+        } else {
+            System.out.println("Error Empty");
+            error.setText("Enter all required data!");
+            error.setVisibility(View.VISIBLE);
         }
     }
 
