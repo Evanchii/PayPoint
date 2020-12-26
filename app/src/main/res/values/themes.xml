@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Theme.PayPoint" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-<!--        <item name="colorPrimary">@color/white</item>-->
+        <item name="colorPrimary">@color/gray_pp</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -11,12 +12,27 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="toolbarStyle">@style/custom_toolbar</item>
         <!-- Customize your theme here. -->
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
     </style>
+
+    <!--To set title text color-->
+    <style name="custom_toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@color/toolbar_yellow</item>
+    </style>
+
+    <!--Toolbar Icon(Hamburger Menu) color-->
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/toolbar_yellow</item>
+    </style>
+
+    <!--Button Colors-->
     <style name="Button.White" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@android:color/white</item>
     </style>
     <style name="Button.Gray" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/gray_pp</item>
     </style>
+
 </resources>

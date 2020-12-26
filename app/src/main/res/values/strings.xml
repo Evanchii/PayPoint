@@ -18,4 +18,8 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
 </resources>

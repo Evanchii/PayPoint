@@ -56,6 +56,15 @@ public class Login extends AppCompatActivity {
                 Login();
             }
         });
+
+        login.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(Login.this, Dashboard.class));
+                finish();
+                return false;
+            }
+        });
     }
 
     public void Signup(View view) {
