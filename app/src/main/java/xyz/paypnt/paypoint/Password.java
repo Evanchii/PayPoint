@@ -27,7 +27,6 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
         getSupportActionBar().setCustomView(R.layout.actionbar);
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("Change Password");
-        setTitle("Change Password");
         setContentView(R.layout.password);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
@@ -38,8 +37,6 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override
@@ -61,17 +58,17 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.action_dashboard:
                 startActivity(new Intent(Password.this, Dashboard.class));
                 finish();
-                break;
             case R.id.action_history:
-                Toast.makeText(Password.this, "History is under construction",Toast.LENGTH_LONG).show();
-                break;
-            case R.id.action_password:
+                startActivity(new Intent(Password.this, History.class));
+                finish();
                 break;
             case R.id.action_use:
-                Toast.makeText(Password.this, "How to Use is under construction",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Password.this, HowToUse.class));
+                finish();
                 break;
             case R.id.action_aboutUs:
-                Toast.makeText(Password.this, "About us is under construction",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Password.this, AboutUs.class));
+                finish();
                 break;
             case R.id.action_logOut:
                 startActivity(new Intent(Password.this, MainActivity.class));

@@ -13,6 +13,9 @@
         <activity android:name="xyz.paypnt.paypoint.Signup" />
         <activity android:name="xyz.paypnt.paypoint.Login" />
         <activity android:name="xyz.paypnt.paypoint.Password" />
+        <activity android:name="xyz.paypnt.paypoint.History" />
+        <activity android:name="xyz.paypnt.paypoint.HowToUse" />
+        <activity android:name="xyz.paypnt.paypoint.AboutUs" />
         <activity android:name="xyz.paypnt.paypoint.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
