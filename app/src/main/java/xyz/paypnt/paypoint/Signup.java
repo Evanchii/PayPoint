@@ -48,7 +48,7 @@ public class Signup extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignIn();
+                SignUp();
             }
         });
 
@@ -58,7 +58,8 @@ public class Signup extends AppCompatActivity {
         startActivity(new Intent(Signup.this, Login.class));
         finish();
     }
-    private void SignIn(){
+    private void SignUp(){
+        error.setVisibility(View.GONE);
         userUsername=(EditText)findViewById(R.id.signup_username);
         userEmail=(EditText)findViewById(R.id.signup_email);
         password=(EditText)findViewById(R.id.signup_password);

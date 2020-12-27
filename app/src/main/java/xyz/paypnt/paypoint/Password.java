@@ -16,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.paypoint.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,22 +63,38 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void changePass() {
+        error.setVisibility(View.GONE);
         oldPass = (EditText) findViewById(R.id.pass_old);
         newPass = (EditText) findViewById(R.id.pass_new);
         confPass = (EditText) findViewById(R.id.pass_confirm);
         error = (TextView) findViewById(R.id.pass_error);
 
-        if(!oldPass.getText().toString().trim().equals(newPass.getText().toString().trim())) {
-            if(newPass.getText().toString().trim().equals(confPass.getText().toString().trim())) {
+        mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), oldPass.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                if(!oldPass.getText().toString().trim().equals(newPass.getText().toString().trim())) {
+                    if(newPass.getText().toString().trim().equals(confPass.getText().toString().trim())) {
+                        mAuth.getCurrentUser().updatePassword(newPass.getText().toString().trim());
+                        Toast.makeText(Password.this, "Changed Password!",Toast.LENGTH_LONG).show();
 
-            } else {
-                error.setText("Passwords do not match");
+                        startActivity(new Intent(Password.this, Dashboard.class));
+                        finish();
+                    } else {
+                        error.setText("Passwords do not match");
+                        error.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    error.setText("Password must differ from old password");
+                    error.setVisibility(View.VISIBLE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                error.setText("Incorrect Old Password");
                 error.setVisibility(View.VISIBLE);
             }
-        } else {
-            error.setText("Password must differ from old password");
-            error.setVisibility(View.VISIBLE);
-        }
+        });
     }
 
     @Override

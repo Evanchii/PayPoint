@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -36,6 +39,7 @@ public class Login extends AppCompatActivity {
     private EditText login_password;
 
     private TextView error;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class Login extends AppCompatActivity {
 
         error = (TextView) findViewById(R.id.login_error);
 
-        Button login=(Button)findViewById(R.id.login_login);
+        login=(Button)findViewById(R.id.login_login);
         login.setOnClickListener(view -> Login());
 
         login.setOnLongClickListener(v -> {
@@ -64,8 +68,10 @@ public class Login extends AppCompatActivity {
         finish();
     }
     private void Login(){
+        error.setVisibility(View.GONE);
         login_email=(EditText)findViewById(R.id.login_email);
         login_password=(EditText)findViewById(R.id.login_password);
+        login.setClickable(false);
 
         if(!login_email.getText().toString().trim().equals("") && !login_password.getText().toString().trim().equals("")){
             mAuth.signInWithEmailAndPassword(String.valueOf(login_email.getText()),String.valueOf(login_password.getText())).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -105,6 +111,7 @@ public class Login extends AppCompatActivity {
             error.setText("Enter all required data!");
             error.setVisibility(View.VISIBLE);
         }
+        login.setClickable(true);
     }
 
     public void forgotPassword(View view) {
