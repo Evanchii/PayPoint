@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +17,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.paypoint.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Password extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference loginDbRef;
+
+    private EditText oldPass, newPass, confPass;
+    private Button change;
+    private TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,33 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mAuth=FirebaseAuth.getInstance();
+        loginDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        change = (Button) findViewById(R.id.pass_change);
+        change.setOnClickListener(v -> {
+            changePass();
+        });
+    }
+
+    private void changePass() {
+        oldPass = (EditText) findViewById(R.id.pass_old);
+        newPass = (EditText) findViewById(R.id.pass_new);
+        confPass = (EditText) findViewById(R.id.pass_confirm);
+        error = (TextView) findViewById(R.id.pass_error);
+
+        if(!oldPass.getText().toString().trim().equals(newPass.getText().toString().trim())) {
+            if(newPass.getText().toString().trim().equals(confPass.getText().toString().trim())) {
+
+            } else {
+                error.setText("Passwords do not match");
+                error.setVisibility(View.VISIBLE);
+            }
+        } else {
+            error.setText("Password must differ from old password");
+            error.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

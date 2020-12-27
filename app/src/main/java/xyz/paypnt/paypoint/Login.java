@@ -50,20 +50,12 @@ public class Login extends AppCompatActivity {
         error = (TextView) findViewById(R.id.login_error);
 
         Button login=(Button)findViewById(R.id.login_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Login();
-            }
-        });
+        login.setOnClickListener(view -> Login());
 
-        login.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startActivity(new Intent(Login.this, Dashboard.class));
-                finish();
-                return false;
-            }
+        login.setOnLongClickListener(v -> {
+            startActivity(new Intent(Login.this, Dashboard.class));
+            finish();
+            return false;
         });
     }
 
