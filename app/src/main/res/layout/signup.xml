@@ -15,12 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/signup_banner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#2b2b2b"
                 android:elevation="10dp"
+                android:foregroundGravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -28,9 +28,21 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/gray_map" />
+
+                <ImageView
                     android:id="@+id/main_logo"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="20dp"
                     android:contentDescription="@string/logo"
                     app:srcCompat="@drawable/logo" />
@@ -39,9 +51,10 @@
                     android:id="@+id/main_logotext"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:layout_below="@id/main_logo"
                     android:contentDescription="@string/text_logo"
                     app:srcCompat="@drawable/text_logo_yellow" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

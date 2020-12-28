@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,10 +69,11 @@ public class Login extends AppCompatActivity {
         finish();
     }
     private void Login(){
+        ScrollView scr = (ScrollView) findViewById(R.id.login_scr);
         error.setVisibility(View.GONE);
         login_email=(EditText)findViewById(R.id.login_email);
         login_password=(EditText)findViewById(R.id.login_password);
-        login.setClickable(false);
+        login.setEnabled(false);
 
         if(!login_email.getText().toString().trim().equals("") && !login_password.getText().toString().trim().equals("")){
             mAuth.signInWithEmailAndPassword(String.valueOf(login_email.getText()),String.valueOf(login_password.getText())).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -92,6 +94,7 @@ public class Login extends AppCompatActivity {
                                 }else{
                                     System.out.println("You don't have Account yet");
                                     error.setText("Account doesn't exist!");
+                                    scr.scrollTo(0,0);
                                     error.setVisibility(View.VISIBLE);
                                 }
                             }
@@ -101,6 +104,7 @@ public class Login extends AppCompatActivity {
                     }else {
                         System.out.println("Error Login");
                         error.setText("Wrong Email/Password");
+                        scr.scrollTo(0,0);
                         error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -109,9 +113,10 @@ public class Login extends AppCompatActivity {
         } else {
             System.out.println("Error Empty");
             error.setText("Enter all required data!");
+            scr.scrollTo(0,0);
             error.setVisibility(View.VISIBLE);
         }
-        login.setClickable(true);
+        login.setEnabled(true);
     }
 
     public void forgotPassword(View view) {
