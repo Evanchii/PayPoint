@@ -3,8 +3,9 @@
     package="com.example.paypoint">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,15 +15,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PayPoint">
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false"></uses-library>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-
-
-        <activity android:name="xyz.paypnt.paypoint.map_activity"></activity>
+        <activity
+            android:name="xyz.paypnt.paypoint.map_activity"
+            android:parentActivityName="xyz.paypnt.paypoint.Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="xyz.paypnt.paypoint.Dashboard" />
+        </activity>
+        <activity
+            android:name="xyz.paypnt.paypoint.PriceBreakDown"
+            android:parentActivityName="xyz.paypnt.paypoint.Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="xyz.paypnt.paypoint.Dashboard" />
+        </activity>
         <activity android:name="xyz.paypnt.paypoint.Dashboard" />
         <activity android:name="xyz.paypnt.paypoint.Signup" />
         <activity android:name="xyz.paypnt.paypoint.Login" />
@@ -30,6 +44,7 @@
         <activity android:name="xyz.paypnt.paypoint.History" />
         <activity android:name="xyz.paypnt.paypoint.HowToUse" />
         <activity android:name="xyz.paypnt.paypoint.AboutUs" />
+        <activity android:name="xyz.paypnt.paypoint.QRScan" />
         <activity android:name="xyz.paypnt.paypoint.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

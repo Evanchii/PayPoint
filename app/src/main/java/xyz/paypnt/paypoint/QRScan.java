@@ -3,9 +3,12 @@ package xyz.paypnt.paypoint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,9 @@ public class QRScan extends AppCompatActivity {
 
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner codeScanner;
+    private Button cancel, pay;
+    private TextView dName, pNumber, initStatus;
+    private ScrollView details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +59,27 @@ public class QRScan extends AppCompatActivity {
 
                     @Override
                     public void run() {
+                        //Insert Detection System
+                        initStatus = (TextView) findViewById(R.id.scan_initStatus);
+                        initStatus.setVisibility(View.GONE);
+                        dName = (TextView) findViewById(R.id.scan_drivername);
+                        pNumber = (TextView) findViewById(R.id.scan_platenumber);
 
-                        TextView res = findViewById(R.id.result);
-                        res.setText(result.getText());
+                        details = (ScrollView) findViewById(R.id.scr_scan);
+                        details.setVisibility(View.VISIBLE);
 
+                        pay = (Button) findViewById(R.id.scan_confirm);
+                        pay.setVisibility(View.VISIBLE);
+                        pay.setOnClickListener(v -> {
+                            //Insert Processing
+                            Toast.makeText(QRScan.this, "Paid %driver name%", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(QRScan.this, Dashboard.class));
+                            finish();
+                        });
+
+                        //For Debugging Purposes
+                        dName.setText(result.getText());
+                        pNumber.setText(result.getText());
                     }
                 });
             }
@@ -74,6 +97,11 @@ public class QRScan extends AppCompatActivity {
             public void onClick(View view) {
                 codeScanner.startPreview();
             }
+        });
+
+        cancel = (Button) findViewById(R.id.scan_cancel);
+        cancel.setOnClickListener(v -> {
+            finish();
         });
     }
 

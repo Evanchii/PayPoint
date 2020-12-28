@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
+    private Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,14 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
                 sendRequest();
             }
         });
+
+        next = (Button) findViewById(R.id.map_next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(map_activity.this, PriceBreakDown.class));
+            }
+        });
     }
 
     @Override
@@ -68,7 +78,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         // Add a marker in position and move the camera
         LatLng position = new LatLng(16.049484398586554, 120.33254164793823);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,18));
-        mMap.addMarker(new MarkerOptions().position(position).title("Your poisition"));
+        mMap.addMarker(new MarkerOptions().position(position).title("Your position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         originMarkers.add(mMap.addMarker(new MarkerOptions().title("OPPS").position(position)));
 
@@ -108,8 +118,8 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(this, "Please wait",
+                "Finding direction...", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {

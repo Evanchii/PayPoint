@@ -29,387 +29,216 @@
                 android:paddingBottom="20dp">
 
                 <ImageView
-                    android:id="@+id/imageView30"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgLeira"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="1364dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:contentDescription="TODO"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <ImageView
-                    android:id="@+id/imageView25"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="1216dp"
-                    android:layout_marginEnd="24dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgKed"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information14"
+                    android:id="@+id/au_txtLeira"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="1256dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:text="Vila, Leira Cabanlong\n Project Analyst"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView26"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="1364dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="1408dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgLeira"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/au_imgBea"
+                    app:layout_constraintTop_toTopOf="@+id/au_imgLeira" />
 
                 <ImageView
-                    android:id="@+id/imageView27"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgKed"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="1064dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="1108dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView28"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="916dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="25dp"
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgKyn"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information17"
+                    android:id="@+id/au_txtKed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="956dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Pablo, Roweign Kedriech De Guzman\nProgrammer"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgKed"
+                    app:layout_constraintEnd_toStartOf="@+id/au_imgRyan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/au_imgKed" />
 
                 <ImageView
-                    android:id="@+id/imageView29"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgArniel"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginTop="1216dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <ImageView
-                    android:id="@+id/imageView32"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="620dp"
-                    android:layout_marginEnd="25dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgGela"
                     app:srcCompat="@drawable/user" />
 
                 <ImageView
-                    android:id="@+id/imageView31"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgKyn"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="768dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgArniel"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information20"
+                    android:id="@+id/au_txtKyn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="812dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Mendoza, Kyn Mejia\nDesigner"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgKyn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/au_imgBea"
+                    app:layout_constraintTop_toTopOf="@+id/au_imgKyn" />
 
                 <TextView
-                    android:id="@+id/information21"
+                    android:id="@+id/au_txtArniel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="660dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:text="Fernandez, Arniel Cabras\nProgrammer"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgArniel"
+                    app:layout_constraintEnd_toStartOf="@+id/au_imgRyan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/au_imgArniel" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/au_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="161dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="161dp"
                     android:fontFamily="@font/main_font"
-                    android:text="About us"
+                    android:text="Meet the Turtle Neck"
                     android:textColor="@color/white"
                     android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView16"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgEvan"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginTop="340dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgBea"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information5"
+                    android:id="@+id/au_txtEvan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="380dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Castillo, Al Evan Cacho\nProgrammer"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgEvan"
+                    app:layout_constraintEnd_toStartOf="@+id/au_imgRyan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/au_imgEvan" />
 
                 <ImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgGela"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="488dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgEvan"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information6"
+                    android:id="@+id/au_txtGela"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="532dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:text="De Guzman, Angela Castillo\nProject Analyst"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgGela"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/au_imgBea"
+                    app:layout_constraintTop_toTopOf="@+id/au_imgGela" />
 
                 <ImageView
-                    android:id="@+id/imageView18"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgBea"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="188dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_imgRyan"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information7"
+                    android:id="@+id/au_txtBea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="232dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Anguluan, Bea Vanessa Dela Cruz\nDesigner"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgBea"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/au_imgBea"
+                    app:layout_constraintTop_toTopOf="@+id/au_imgBea" />
 
                 <ImageView
-                    android:id="@+id/imageView19"
-                    android:layout_width="113dp"
+                    android:id="@+id/au_imgRyan"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/au_header"
                     app:srcCompat="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/information8"
+                    android:id="@+id/au_txtRyan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Villanueva, Ryan Lomibao\nProject Manager"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
+                    app:layout_constraintBottom_toBottomOf="@+id/au_imgRyan"
+                    app:layout_constraintEnd_toStartOf="@+id/au_imgRyan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="340dp"
-                    android:layout_marginEnd="25dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="380dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="488dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="532dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="188dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginTop="232dp"
-                    android:layout_marginEnd="95dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView10"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="113dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="25dp"
-                    android:contentDescription="TODO"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user" />
-
-                <TextView
-                    android:id="@+id/information"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="95dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="Insert Text Here \n    Hello there"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/au_imgRyan" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
