@@ -15,7 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -112,27 +112,8 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_dashboard:
-                startActivity(new Intent(Password.this, Dashboard.class));
-                finish();
-            case R.id.action_history:
-                startActivity(new Intent(Password.this, History.class));
-                finish();
-                break;
-            case R.id.action_use:
-                startActivity(new Intent(Password.this, HowToUse.class));
-                finish();
-                break;
-            case R.id.action_aboutUs:
-                startActivity(new Intent(Password.this, AboutUs.class));
-                finish();
-                break;
-            case R.id.action_logOut:
-                startActivity(new Intent(Password.this, MainActivity.class));
-                finish();
-                break;
-        }
+        if(CommonFunctions.menu(this, item, "Password"))
+            finish();
         return true;
     }
 }

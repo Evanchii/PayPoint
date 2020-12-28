@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 
 public class Splashscreen extends AppCompatActivity {
 

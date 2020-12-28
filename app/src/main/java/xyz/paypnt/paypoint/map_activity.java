@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,9 +53,15 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_activity);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(map_activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
+            return;
+        }
+
         SupportMapFragment mapFragment =(SupportMapFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-                mapFragment.getMapAsync( this);
+        mapFragment.getMapAsync( this);
 
         map_Origin=(EditText)findViewById(R.id.map_Origin);
         map_Destination=(EditText)findViewById(R.id.map_Distination);
@@ -88,16 +94,8 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         originMarkers.add(mMap.addMarker(new MarkerOptions().title("OPPS").position(position)));
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        }
         mMap.setMyLocationEnabled(true);
     }
 

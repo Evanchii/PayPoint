@@ -13,7 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class HowToUse extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,27 +54,8 @@ public class HowToUse extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_dashboard:
-                startActivity(new Intent(HowToUse.this, Dashboard.class));
-                finish();
-            case R.id.action_history:
-                startActivity(new Intent(HowToUse.this, History.class));
-                finish();
-                break;
-            case R.id.action_password:
-                startActivity(new Intent(HowToUse.this, Password.class));
-                finish();
-                break;
-            case R.id.action_aboutUs:
-                startActivity(new Intent(HowToUse.this, AboutUs.class));
-                finish();
-                break;
-            case R.id.action_logOut:
-                startActivity(new Intent(HowToUse.this, MainActivity.class));
-                finish();
-                break;
-        }
+        if(CommonFunctions.menu(this, item, "How to use?"))
+            finish();
         return true;
     }
 }

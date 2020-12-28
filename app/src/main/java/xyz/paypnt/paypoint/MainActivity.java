@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 
 public class MainActivity extends AppCompatActivity {
 

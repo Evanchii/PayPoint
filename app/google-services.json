@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:833192782883:android:066f3f7ad6fb40c1931596",
         "android_client_info": {
-          "package_name": "com.paypnt.paypoint"
+          "package_name": "xyz.paypnt.paypoint"
         }
       },
       "oauth_client": [

@@ -2,8 +2,11 @@ package xyz.paypnt.paypoint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +21,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.budiyev.android.codescanner.ErrorCallback;
 import com.budiyev.android.codescanner.ScanMode;
-import com.example.paypoint.R;
+import xyz.paypnt.paypoint.R;
 import com.google.zxing.Result;
 
 import org.w3c.dom.Text;
@@ -37,6 +40,10 @@ public class QRScan extends AppCompatActivity {
         setTitle("Scan");
         setContentView(R.layout.qrscan);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(QRScan.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        }
+
         codeScanner();
     }
 
@@ -44,6 +51,8 @@ public class QRScan extends AppCompatActivity {
         CodeScannerView scannerView = findViewById(R.id.qrscan_cam);
         codeScanner = new CodeScanner(this, scannerView);
         Toast.makeText(this, "Camera Created", Toast.LENGTH_LONG).show();
+
+
         codeScanner.setCamera(CodeScanner.CAMERA_BACK);
         codeScanner.setFormats(CodeScanner.ALL_FORMATS);
 
@@ -88,7 +97,7 @@ public class QRScan extends AppCompatActivity {
         codeScanner.setErrorCallback(new ErrorCallback() {
             @Override
             public void onError(@NonNull Exception error) {
-                Toast.makeText(QRScan.this, "An Error Occured! See logs", Toast.LENGTH_LONG).show();
+//                Toast.makeText(QRScan.this, "An Error Occured! See logs", Toast.LENGTH_LONG).show();
                 Log.d("QR", "An Error Occurred\n"+error);
             }
         });
