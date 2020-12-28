@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,8 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private Button next;
+    private RelativeLayout info;
+    private RadioButton jeep, taxi, bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +117,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
             new DirectionFinder( this, Origin, Destination).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            Toast.makeText(map_activity.this, "An error occurred while fetching API. See logs", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -120,6 +126,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     public void onDirectionFinderStart() {
         progressDialog = ProgressDialog.show(this, "Please wait",
                 "Finding direction...", true);
+        progressDialog.setCancelable(true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -146,11 +153,14 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
+        double distance = 0;
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
             ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            Toast.makeText(this, route.distance.text+" -- "+route.distance.value, Toast.LENGTH_LONG).show();
+            distance = route.distance.value/1000;
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
@@ -171,5 +181,17 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
+
+        info = (RelativeLayout) findViewById(R.id.map_details);
+        info.setVisibility(View.VISIBLE);
+
+        jeep = (RadioButton) findViewById(R.id.map_jeep);
+        taxi = (RadioButton) findViewById(R.id.map_taxi);
+        bus = (RadioButton) findViewById(R.id.map_bus);
+
+        Toast.makeText(this, String.valueOf(distance), Toast.LENGTH_LONG).show();
+        jeep.setText("Jeepney\nPhp "+ String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00));
+        taxi.setText("Taxi\nPhp "+String.valueOf(distance*20));
+        bus.setText("Bus\nPhp "+String.valueOf(distance*2));
     }
 }

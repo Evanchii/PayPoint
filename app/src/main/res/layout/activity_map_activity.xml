@@ -106,13 +106,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
+        android:id="@+id/map_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4D000000"
         android:orientation="horizontal"
+        android:visibility="gone"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent">
+        map:layout_constraintStart_toStartOf="parent"
+        tools:visibility="invisible">
 
         <RadioGroup
             android:id="@+id/map_type"
@@ -122,7 +125,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radJeep"
+                android:id="@+id/map_jeep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/main_font"
@@ -130,7 +133,7 @@
                 android:textColor="@color/white" />
 
             <RadioButton
-                android:id="@+id/radTaxi"
+                android:id="@+id/map_taxi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/main_font"
@@ -138,7 +141,7 @@
                 android:textColor="@color/white" />
 
             <RadioButton
-                android:id="@+id/radBus"
+                android:id="@+id/map_bus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/main_font"
