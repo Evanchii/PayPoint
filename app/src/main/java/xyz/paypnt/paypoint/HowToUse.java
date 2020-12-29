@@ -29,6 +29,8 @@ public class HowToUse extends AppCompatActivity implements NavigationView.OnNavi
         title.setText("How to use");
         setContentView(R.layout.password);
 
+        new CommonFunctions().fetchHamburgerDetails();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);

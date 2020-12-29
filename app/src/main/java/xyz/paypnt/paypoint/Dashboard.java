@@ -46,9 +46,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.dashboard);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        DatabaseReference dbRedf = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
 
-        dbRedf.addValueEventListener(new ValueEventListener() {
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -65,7 +65,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-
+        new CommonFunctions().fetchHamburgerDetails();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);

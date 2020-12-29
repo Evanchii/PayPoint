@@ -44,6 +44,8 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
         title.setText("Change Password");
         setContentView(R.layout.password);
 
+        new CommonFunctions().fetchHamburgerDetails();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);

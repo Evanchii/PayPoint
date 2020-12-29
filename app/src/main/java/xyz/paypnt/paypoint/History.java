@@ -29,6 +29,8 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         title.setText("History");
         setContentView(R.layout.password);
 
+        new CommonFunctions().fetchHamburgerDetails();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);

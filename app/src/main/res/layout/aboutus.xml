@@ -62,7 +62,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgKyn"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/img_ked" />
 
                 <TextView
                     android:id="@+id/au_txtKed"
@@ -87,7 +87,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgGela"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/img_arniel" />
 
                 <ImageView
                     android:id="@+id/au_imgKyn"
@@ -151,7 +151,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgBea"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/img_evan" />
 
                 <TextView
                     android:id="@+id/au_txtEvan"
@@ -224,7 +224,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_header"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/img_ryan" />
 
                 <TextView
                     android:id="@+id/au_txtRyan"
