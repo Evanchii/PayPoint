@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -45,11 +47,16 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         DatabaseReference dbRedf = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
-        final String[] uName = {null};
+
         dbRedf.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                uName[0] =snapshot.child("Username").getValue().toString();
+
+                String uName = String.valueOf(snapshot.child("Username").getValue());
+                TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
+                bal.setText("0.00 - Str");
+                user.setText("Welcome, "+ uName);
+                System.out.println(uName);
             }
 
             @Override
@@ -58,9 +65,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
-        bal.setText("0.00 - Str");
-        user.setText("Welcome, "+ uName[0]);
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
