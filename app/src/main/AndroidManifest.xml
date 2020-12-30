@@ -37,6 +37,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Dashboard" />
         </activity>
+        <activity
+            android:name=".QRScan"
+            android:parentActivityName=".Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Dashboard" />
+        </activity>
         <activity android:name=".Dashboard" />
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
@@ -44,7 +51,6 @@
         <activity android:name=".History" />
         <activity android:name=".HowToUse" />
         <activity android:name=".AboutUs" />
-        <activity android:name=".QRScan" />
         <activity android:name=".Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

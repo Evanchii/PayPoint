@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,9 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     private Button next;
     private RelativeLayout info;
     private RadioButton jeep, taxi, bus;
+    private RadioGroup type;
+    private String typeSel = "";
+    private float priceSel = 0, distance = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +78,37 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        type = (RadioGroup) findViewById(R.id.map_type);
+        jeep = (RadioButton) type.findViewById(R.id.map_jeep);
+        taxi = (RadioButton) type.findViewById(R.id.map_taxi);
+        bus = (RadioButton) type.findViewById(R.id.map_bus);
         next = (Button) findViewById(R.id.map_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(map_activity.this, PriceBreakDown.class));
+                Toast.makeText(map_activity.this, String.valueOf(distance) + "km - ma", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(map_activity.this, PriceBreakDown.class)
+                        .putExtra("type", typeSel)
+                        .putExtra("origin", String.valueOf(map_Origin.getText()))
+                        .putExtra("destination", String.valueOf(map_Destination.getText()))
+                        .putExtra("price", (float)priceSel)
+                        .putExtra("distance", (float)distance));
+            }
+        });
+
+        type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == jeep.getId()) {
+                    typeSel = "Jeep";
+                    priceSel = (distance>5) ? ((distance-5)*3)+10 : (float) 10.00;
+                } else if (checkedId == taxi.getId()) {
+                    typeSel = "Taxi";
+                    priceSel = distance*20;
+                } else if (checkedId == bus.getId()) {
+                    typeSel = "Taxi";
+                    priceSel = distance*2;
+                }
             }
         });
     }
@@ -151,13 +181,11 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
-        double distance = 0;
 
         for (Route route : routes) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
             ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
             ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
-            Toast.makeText(this, route.distance.text+" -- "+route.distance.value, Toast.LENGTH_LONG).show();
             distance = route.distance.value/1000;
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
@@ -183,13 +211,11 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         info = (RelativeLayout) findViewById(R.id.map_details);
         info.setVisibility(View.VISIBLE);
 
-        jeep = (RadioButton) findViewById(R.id.map_jeep);
-        taxi = (RadioButton) findViewById(R.id.map_taxi);
-        bus = (RadioButton) findViewById(R.id.map_bus);
-
-        Toast.makeText(this, String.valueOf(distance), Toast.LENGTH_LONG).show();
-        jeep.setText("Jeepney\nPhp "+ String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00));
+        jeep.setText("Jeepney\nPhp "+ String.valueOf(String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00)));
+        jeep.setContentDescription(String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00));
         taxi.setText("Taxi\nPhp "+String.valueOf(distance*20));
+        taxi.setContentDescription(String.valueOf(distance*20));
         bus.setText("Bus\nPhp "+String.valueOf(distance*2));
+        bus.setContentDescription(String.valueOf(distance*2));
     }
 }

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2b2b2b"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     tools:context="xyz.paypnt.paypoint.PriceBreakDown">
 
     <ScrollView
@@ -16,30 +18,193 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
+            android:id="@+id/pb_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
 
             <TextView
+                android:id="@+id/pb_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_placeholder"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblOrigin"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDestination"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblType"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_discounts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDistance"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDiscounts"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:text="0.0\n0.0"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDiscount"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/main_font"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/pb_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/main_font"
-                android:text="Breakdown uwu"
+                android:text="Summary of Transaction"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pb_lblOrigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_placeholder"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Origin"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblOrigin"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Destination"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDestination"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Type"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblType"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Distance(km)"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblDiscounts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDistance"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Discounts"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDiscounts"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Student Discount\nSenior Citizen Discount"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/pb_lblTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pb_lblDiscount"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/main_font"
+                android:text="Total"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/pd_decline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/pb_placeholder"
+                android:layout_below="@id/pb_lblTotal"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/main_font"
                 android:text="Decline"
@@ -50,10 +215,11 @@
                 android:id="@+id/pd_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/pb_placeholder"
+                android:layout_below="@id/pb_total"
                 android:layout_alignParentTop="false"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/main_font"
