@@ -21,15 +21,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Password extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference loginDbRef;
+    private DatabaseReference dbRef;
 
     private EditText oldPass, newPass, confPass;
     private Button change;
@@ -44,7 +47,7 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
         title.setText("Change Password");
         setContentView(R.layout.password);
 
-        new CommonFunctions().fetchHamburgerDetails();
+        new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -56,7 +59,7 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         mAuth=FirebaseAuth.getInstance();
-        loginDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         change = (Button) findViewById(R.id.pass_change);
         change.setOnClickListener(v -> {

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import xyz.paypnt.paypoint.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 
 public class Signup extends AppCompatActivity {
 
-    private FirebaseAuth mAut;
+    private FirebaseAuth mAuth;
     private DatabaseReference fdb;
     private EditText userUsername;
     private EditText userEmail;
@@ -39,7 +40,7 @@ public class Signup extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.signup);
 
-        mAut=FirebaseAuth.getInstance();
+        mAuth=FirebaseAuth.getInstance();
         fdb = FirebaseDatabase.getInstance().getReference().child("Users");
 
         error = (TextView) findViewById(R.id.signup_error);
@@ -78,17 +79,34 @@ public class Signup extends AppCompatActivity {
 
                 System.out.println("VALUE:\t"+signUp);
 
-                mAut.createUserWithEmailAndPassword(String.valueOf(signUp.get("Email")),String.valueOf(signUp.get("Password"))).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(String.valueOf(signUp.get("Email")),String.valueOf(signUp.get("Password"))).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            String userID=mAut.getCurrentUser().getUid();
+                            String userID=mAuth.getCurrentUser().getUid();
                             DatabaseReference signupDbRef = fdb.child(userID);
                             signupDbRef.child("Username").setValue(String.valueOf(signUp.get("Username")));
 
                             Intent intent= new Intent(Signup.this,Login.class);
                             startActivity(intent);
                         }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e.getMessage().contains("badly formatted")) {
+                            error.setText("Please enter a valid Email Address");
+                        }
+                        else if(e.getMessage().contains("address is in use by another account")) {
+                            error.setText("Email Address is in use by another account!");
+                        }
+                        else if(e.getMessage().contains("6 character")) {
+                            error.setText("Password should be at least 6 characters long");
+                        }
+                        else {
+                            error.setText(e.getMessage());
+                        }
+                        error.setVisibility(View.VISIBLE);
                     }
                 });
 

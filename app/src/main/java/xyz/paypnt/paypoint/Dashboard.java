@@ -6,19 +6,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import xyz.paypnt.paypoint.R;
-import com.google.android.gms.common.internal.service.Common;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -57,6 +47,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 bal.setText("0.00 - Str");
                 user.setText("Welcome, "+ uName);
                 System.out.println(uName);
+
             }
 
             @Override
@@ -65,7 +56,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        new CommonFunctions().fetchHamburgerDetails();
+        new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);

@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -41,6 +43,7 @@ public class Login extends AppCompatActivity {
 
     private TextView error;
     private Button login;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +70,16 @@ public class Login extends AppCompatActivity {
     public void Signup(View view) {
         startActivity(new Intent(Login.this, Signup.class));
         finish();
+        
     }
     private void Login(){
+        Log.d(String.valueOf(this), "Logging in");
         ScrollView scr = (ScrollView) findViewById(R.id.login_scr);
-        error.setVisibility(View.GONE);
         login_email=(EditText)findViewById(R.id.login_email);
         login_password=(EditText)findViewById(R.id.login_password);
-        login.setEnabled(false);
 
         if(!login_email.getText().toString().trim().equals("") && !login_password.getText().toString().trim().equals("")){
+            dialog = ProgressDialog.show(Login.this, "Please wait","Logging in...", true);
             mAuth.signInWithEmailAndPassword(String.valueOf(login_email.getText()),String.valueOf(login_password.getText())).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -90,12 +94,15 @@ public class Login extends AppCompatActivity {
 
                                     Intent intent = new Intent( Login.this ,Dashboard.class);
                                     startActivity(intent);
+                                    dialog.dismiss();
+                                    finish();
 
                                 }else{
                                     System.out.println("You don't have Account yet");
                                     error.setText("Account doesn't exist!");
-                                    scr.scrollTo(0,0);
+                                    scr.smoothScrollTo(0,0);
                                     error.setVisibility(View.VISIBLE);
+                                    dialog.dismiss();
                                 }
                             }
                             @Override
@@ -104,8 +111,9 @@ public class Login extends AppCompatActivity {
                     }else {
                         System.out.println("Error Login");
                         error.setText("Wrong Email/Password");
-                        scr.scrollTo(0,0);
+                        scr.smoothScrollTo(0,0);
                         error.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
                     }
                 }
             });
@@ -113,10 +121,10 @@ public class Login extends AppCompatActivity {
         } else {
             System.out.println("Error Empty");
             error.setText("Enter all required data!");
-            scr.scrollTo(0,0);
+            scr.smoothScrollTo(0,0);
             error.setVisibility(View.VISIBLE);
+            dialog.dismiss();
         }
-        login.setEnabled(true);
     }
 
     public void forgotPassword(View view) {
@@ -145,9 +153,7 @@ public class Login extends AppCompatActivity {
         });
         resetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
+            public void onClick(DialogInterface dialog, int which) {}
         });
         resetDialog.create().show();
     }
