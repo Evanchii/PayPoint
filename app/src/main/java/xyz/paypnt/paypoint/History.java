@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         getSupportActionBar().setCustomView(R.layout.actionbar);
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("History");
-        setContentView(R.layout.password);
+        setContentView(R.layout.history);
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 
@@ -45,6 +46,9 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Button book = (Button) findViewById(R.id.his_book);
+        book.setOnClickListener(v -> startActivity(new Intent(History.this, map_activity.class)));
     }
 
     @Override

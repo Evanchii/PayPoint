@@ -22,10 +22,7 @@ public class DriverRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar);
-        TextView title=(TextView)findViewById(R.id.action_bar_title);
-        title.setText("Register Vehicle");
+        getSupportActionBar().setTitle("Register Vehicle");
         setContentView(R.layout.driverregister);
 
         dateView = (EditText) findViewById(R.id.reg_txtBday);

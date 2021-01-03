@@ -86,6 +86,8 @@ public class Signup extends AppCompatActivity {
                             String userID=mAuth.getCurrentUser().getUid();
                             DatabaseReference signupDbRef = fdb.child(userID);
                             signupDbRef.child("Username").setValue(String.valueOf(signUp.get("Username")));
+                            signupDbRef.child("Type").setValue("User");
+                            signupDbRef.child("Balance").setValue(0.001);
 
                             Intent intent= new Intent(Signup.this,Login.class);
                             startActivity(intent);

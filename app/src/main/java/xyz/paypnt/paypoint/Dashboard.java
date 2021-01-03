@@ -42,8 +42,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String uName = String.valueOf(snapshot.child("Username").getValue());
+                String balance = String.format("%.2f",snapshot.child("Balance").getValue());
                 TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
-                bal.setText("0.00 - Str");
+                bal.setText(balance);
                 user.setText("Welcome, "+ uName);
                 System.out.println(uName);
 
@@ -79,11 +80,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
         return super.onOptionsItemSelected(item);
-    }
-
-    public void logout(View view) {
-        startActivity(new Intent(Dashboard.this, MainActivity.class));
-        finish();
     }
 
     @Override
