@@ -22,6 +22,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
+            <LinearLayout
+                android:id="@+id/dashboard_driver"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@+id/dashboard_drivTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/main_font"
+                    android:text="Register your\nPUJ/PUV/PUB!"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/dashboard_viewBal"
                 android:layout_width="match_parent"
@@ -129,11 +153,14 @@
                 android:id="@+id/dashboard_apply"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:orientation="vertical"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dashboard_background">
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/dashboard_registerTxt"
@@ -156,6 +183,76 @@
                     android:textColor="@color/gray_pp"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dashboard_process"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@+id/dashboard_procTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/main_font"
+                    android:text="You're application is being\nprocessed!"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/dashboard_stateTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16sp"
+                    android:fontFamily="@font/main_font"
+                    android:text="Status:"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/dashboard_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/main_font"
+                    android:text="Fetching..."
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dashboard_admin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@+id/dashboard_adminTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/main_font"
+                    android:text="Register your\nPUJ/PUV/PUB!"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="24sp" />
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

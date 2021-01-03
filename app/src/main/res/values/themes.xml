@@ -35,4 +35,9 @@
         <item name="colorAccent">@color/gray_pp</item>
     </style>
 
+    <style name="WhiteBTN" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:buttonStyle">@style/Button.White</item>
+    </style>
+
+
 </resources>

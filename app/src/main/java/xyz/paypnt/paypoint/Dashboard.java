@@ -28,7 +28,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
         TextView title=(TextView)findViewById(R.id.action_bar_title);
@@ -69,6 +68,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         Button dashboard_book=(Button)findViewById(R.id.dashboard_book);
         dashboard_book.setOnClickListener(view -> startActivity(new Intent(Dashboard.this,map_activity.class)));
+
+        Button reg = (Button) findViewById(R.id.dashboard_register);
+        reg.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, DriverRegister.class)));
 
     }
 

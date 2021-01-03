@@ -44,6 +44,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Dashboard" />
         </activity>
+        <activity
+            android:name=".DriverRegister"
+            android:parentActivityName=".Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Dashboard" />
+        </activity>
         <activity android:name=".Dashboard" />
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
