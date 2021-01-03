@@ -123,7 +123,6 @@ public class Login extends AppCompatActivity {
             error.setText("Enter all required data!");
             scr.smoothScrollTo(0,0);
             error.setVisibility(View.VISIBLE);
-            dialog.dismiss();
         }
     }
 
