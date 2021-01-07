@@ -41,7 +41,7 @@ public class DriverRegister extends AppCompatActivity {
 
     private EditText reg_txtFName,reg_txtLName,reg_txtPNumber;
 
-    private static final int GALLERY_INTENTlicence=2;
+    private static final int GALLERY_INTENTlicence=1;
     private static final int GALLERY_INTENTid=2;
 
     private Uri UriLicense, UriID;
@@ -141,6 +141,7 @@ public class DriverRegister extends AppCompatActivity {
             System.out.println("Clicked");
             StorageReference filepathLicense = mStorage.child("License").child(UriLicense.getLastPathSegment());
             filepathLicense.putFile(UriLicense);
+
             StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
             filepathID.putFile(UriID);
 //        }else{
