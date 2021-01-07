@@ -3,6 +3,8 @@ package xyz.paypnt.paypoint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,14 +85,23 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+//                            mAuth.getCurrentUser().sendEmailVerification();
+                            AlertDialog.Builder confEmail = new AlertDialog.Builder(Signup.this);
                             String userID=mAuth.getCurrentUser().getUid();
                             DatabaseReference signupDbRef = fdb.child(userID);
                             signupDbRef.child("Username").setValue(String.valueOf(signUp.get("Username")));
                             signupDbRef.child("Type").setValue("User");
                             signupDbRef.child("Balance").setValue(0.001);
 
-                            Intent intent= new Intent(Signup.this,Login.class);
-                            startActivity(intent);
+                            confEmail.setTitle("We sent you an email")
+                                    .setMessage("Please check your inbox/spam to confirm your email address.")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent= new Intent(Signup.this,Login.class);
+                                            startActivity(intent);
+                                        }
+                                    }).setCancelable(false).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

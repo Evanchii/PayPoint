@@ -33,6 +33,9 @@ import com.google.zxing.Result;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+
 public class QRScan extends AppCompatActivity {
 
     private final int CAMERA_REQUEST_CODE = 101;
@@ -42,6 +45,7 @@ public class QRScan extends AppCompatActivity {
     private ScrollView details;
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
+    private String driverUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,50 @@ public class QRScan extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        cancel = (Button) findViewById(R.id.scan_cancel);
+        cancel.setOnClickListener(v -> finish());
+
+        pay = (Button) findViewById(R.id.scan_confirm);
+        pay.setOnClickListener(v -> {
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    double userBal = (double) snapshot.child(mAuth.getCurrentUser().getUid()).child("Balance").getValue(),
+                        total = (double) getIntent().getFloatExtra("finalTotal", 0),
+                        driverBal = (double) snapshot.child(driverUid).child("Balance").getValue();
+
+//                    Toast.makeText(QRScan.this, data[0]+" "+data[1]+" "+data[2], Toast.LENGTH_LONG).show();
+                    if(userBal >= total && total != 0) {
+                        codeScanner.releaseResources();
+                        dbRef.child(mAuth.getCurrentUser().getUid()).child("Balance").setValue((float) userBal - total);
+                        dbRef.child(driverUid).child("Balance").setValue((float) userBal + total);
+
+                        //add to history
+                        String id = String.valueOf(Calendar.getInstance().getTime());
+                        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("History").child(id);
+
+                        dbRef.child("TimeDate").setValue(id);
+                        dbRef.child("Driver").setValue(driverUid);
+                        dbRef.child("Source").setValue(getIntent().getStringExtra("src"));
+                        dbRef.child("Destination").setValue(getIntent().getStringExtra("dest"));
+                        dbRef.child("Price").setValue((double) total);
+                        dbRef.child("Type").setValue(getIntent().getStringExtra("type"));
+
+                        Toast.makeText(QRScan.this, "Paid " + dName.getText() + " Php "+String.format("%.2f", total), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(QRScan.this, Dashboard.class));
+//                        finish();
+                    } else {
+                        Toast.makeText(QRScan.this, "An Error Occurred! "/*Insert Reason*/, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
+
+
+        });
 
         codeScanner();
     }
@@ -87,58 +135,33 @@ public class QRScan extends AppCompatActivity {
 
                         details = (ScrollView) findViewById(R.id.scr_scan);
 
-                        pay = (Button) findViewById(R.id.scan_confirm);
-                        pay.setOnClickListener(v -> {
-                            /**Insert Processing
-                              *Check if balance is adequate
-                              *Check if type matches
-
-                              *Finalize Balance Deduction
-                              *Add to history User & Driver*/
-
-                            //If succeeded
-                            if(true /*This is temporary*/) {
-                                Toast.makeText(QRScan.this, "Paid " + dName.getText(), Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(QRScan.this, Dashboard.class));
-                                finish();
-                            } else {
-                                Toast.makeText(QRScan.this, "An Error Occurred! "/*Insert Reason*/, Toast.LENGTH_LONG).show();
-                            }
-
-                        });
                         dbRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.child(result.getText()).exists()) {
+                                Toast.makeText(QRScan.this, String.valueOf(snapshot.child(result.getText()).exists())+"\n"+
+                                        snapshot.child(result.getText()).child("Type").getValue().equals("Driver")+"\n"+
+                                        getIntent().getStringExtra("type").equals(snapshot.child(result.getText()).child("Driver Info").child("Type").getValue()), Toast.LENGTH_LONG).show();
+                                if(snapshot.child(result.getText()).exists()
+                                        && snapshot.child(result.getText()).child("Type").getValue().equals("Driver")
+                                        && getIntent().getStringExtra("type").equals(snapshot.child(result.getText()).child("Driver Info").child("Type").getValue())) {
                                     initStatus.setVisibility(View.GONE);
                                     details.setVisibility(View.VISIBLE);
                                     pay.setVisibility(View.VISIBLE);
-                                    String temp = String.valueOf(snapshot.child(result.getText()).child("Username").getValue());
-                                    dName.setText(temp);
-                                    pNumber.setText("To be implemented!");
+                                    driverUid = result.getText();
+                                    String driverName = String.valueOf(snapshot.child(result.getText()).child("Username").getValue());
+                                    dName.setText(driverName);
+                                    pNumber.setText(snapshot.child(result.getText()).child("Driver Info").child("PlateNumber").getValue().toString());
                                 } else {
-                                    initStatus.setText("Invalid QR code\n"+result.getText());
+                                    initStatus.setText(String.format("Invalid QR code\n%s", result.getText()));
                                     initStatus.setVisibility(View.VISIBLE);
                                     details.setVisibility(View.GONE);
                                     pay.setVisibility(View.GONE);
                                 }
-//                                String uName = String.valueOf(snapshot.child("Username").getValue());
-//                                TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
-//                                bal.setText("0.00 - Str");
-//                                user.setText("Welcome, "+ uName);
-//                                System.out.println(uName);
-
                             }
 
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
+                            public void onCancelled(@NonNull DatabaseError error) {}
                         });
-
-                        //For Debugging Purposes
-//                        dName.setText(result.getText());
-//                        pNumber.setText(result.getText());
                     }
                 });
             }
@@ -147,7 +170,6 @@ public class QRScan extends AppCompatActivity {
         codeScanner.setErrorCallback(new ErrorCallback() {
             @Override
             public void onError(@NonNull Exception error) {
-//                Toast.makeText(QRScan.this, "An Error Occured! See logs", Toast.LENGTH_LONG).show();
                 Log.d("QR", "An Error Occurred\n"+error);
             }
         });
@@ -156,11 +178,6 @@ public class QRScan extends AppCompatActivity {
             public void onClick(View view) {
                 codeScanner.startPreview();
             }
-        });
-
-        cancel = (Button) findViewById(R.id.scan_cancel);
-        cancel.setOnClickListener(v -> {
-            finish();
         });
     }
 

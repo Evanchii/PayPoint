@@ -90,13 +90,22 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.hasChild(userID)){
-                                    System.out.println("Welcome Dashboard");
+                                    if(mAuth.getCurrentUser().isEmailVerified()) {
+                                        System.out.println("Welcome Dashboard");
 
-                                    Intent intent = new Intent( Login.this ,Dashboard.class);
-                                    startActivity(intent);
-                                    dialog.dismiss();
-                                    finish();
-
+                                        startActivity(new Intent(Login.this, Dashboard.class));
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                    else {
+                                        AlertDialog.Builder confEmail = new AlertDialog.Builder(Login.this);
+                                        confEmail.setTitle("We sent you an email")
+                                                .setMessage("Please check your inbox/spam to confirm your email address.")
+                                                .setPositiveButton("OK", (dialog, which) -> mAuth.signOut())
+                                                .setNegativeButton("Resend Email", (dialog, which) -> {mAuth.getCurrentUser().sendEmailVerification(); mAuth.signOut();})
+                                                .setCancelable(false).show();
+                                        dialog.dismiss();
+                                    }
                                 }else{
                                     System.out.println("You don't have Account yet");
                                     error.setText("Account doesn't exist!");

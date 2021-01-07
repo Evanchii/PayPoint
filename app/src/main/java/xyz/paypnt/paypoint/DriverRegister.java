@@ -119,8 +119,12 @@ public class DriverRegister extends AppCompatActivity {
     public void driverRegisterSignUp(){
 
 //        Evan Edit this...
+//        -Ryan
 
-//        if(reg_txtFName.getText().toString().trim().equals("") && reg_txtLName.getText().toString().trim().equals("") && reg_txtPNumber.getText().toString().trim().equals("") && dateView.getText().toString().trim().equals("")) {
+//        Sure daddy :*
+//        -Evan
+
+        if(!reg_txtFName.getText().toString().trim().equals("") && !reg_txtLName.getText().toString().trim().equals("") && !reg_txtPNumber.getText().toString().trim().equals("") && !dateView.getText().toString().trim().equals("")) {
 
             DriverRegisterSetterAndGetter driverRegister = new DriverRegisterSetterAndGetter();
             HashMap<String, Object> dRegister = new HashMap<>();
@@ -135,7 +139,7 @@ public class DriverRegister extends AppCompatActivity {
             driverDBref.child("FirstName").setValue(String.valueOf(driverRegister.getDriverRegister().get("FirstName")));
             driverDBref.child("LastName").setValue(String.valueOf(driverRegister.getDriverRegister().get("LastName")));
             driverDBref.child("PlateNumber").setValue(String.valueOf(driverRegister.getDriverRegister().get("PlateNumber")));
-            driverDBref.child("BirthDay").setValue(String.valueOf(driverRegister.getDriverRegister().get("BirthDay")));
+            driverDBref.child("Birthday").setValue(String.valueOf(driverRegister.getDriverRegister().get("BirthDay")));
 
 
             System.out.println("Clicked");
@@ -144,10 +148,10 @@ public class DriverRegister extends AppCompatActivity {
 
             StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
             filepathID.putFile(UriID);
-//        }else{
+        }else{
 
             System.out.println("Error");
-//        }
+        }
 
     }
 
