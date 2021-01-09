@@ -32,4 +32,25 @@
     <string name="plate_number_">Plate Number:</string>
     <string name="last_name">Last Name:</string>
     <string name="first_name_">First Name:</string>
+
+    <string-array name="route_driver">
+        <item>Select Route</item>
+        <item>Taxi - Dagupan City</item>
+        <item>Bus - Dagupan City</item>
+        <item>Bonuan Boquig - Dagupan City</item>
+        <item>Bonuan Binloc - Dagupan City</item>
+        <item>Bonuan Tondaligan - Dagupan City</item>
+        <item>Calasiao - Dagupan City</item>
+        <item>Downtown - Dagupan City</item>
+        <item>Lucao - Dagupan City</item>
+        <item>Mangaldan - Dagupan City</item>
+        <item>Sta. Barbara - Dagupan City</item>
+    </string-array>
+
+    <string-array name="type_of_trans">
+        <item>Select Type</item>
+        <item>Jeepney - PUJ</item>
+        <item>Taxi/Van - PUV</item>
+        <item>Bus - PUB</item>
+    </string-array>
 </resources>

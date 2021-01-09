@@ -3,7 +3,7 @@ package xyz.paypnt.paypoint;
 import java.util.HashMap;
 
 public class DriverRegisterSetterAndGetter {
-    private HashMap<String,Object> driverRegister=new HashMap();
+    private HashMap<String,Object> driverRegister=new HashMap<>();
 
     public DriverRegisterSetterAndGetter() {
 

@@ -33,7 +33,7 @@ public class HowToUse extends AppCompatActivity implements NavigationView.OnNavi
         getSupportActionBar().setCustomView(R.layout.actionbar);
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("How to use");
-        setContentView(R.layout.password);
+        setContentView(R.layout.howtouse);
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 

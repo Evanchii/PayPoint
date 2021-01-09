@@ -39,7 +39,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgKed"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/ic_user" />
 
                 <TextView
                     android:id="@+id/au_txtLeira"
@@ -62,7 +62,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgKyn"
-                    app:srcCompat="@drawable/img_ked" />
+                    app:srcCompat="@drawable/tm_ked" />
 
                 <TextView
                     android:id="@+id/au_txtKed"
@@ -87,7 +87,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgGela"
-                    app:srcCompat="@drawable/img_arniel" />
+                    app:srcCompat="@drawable/tm_arniel" />
 
                 <ImageView
                     android:id="@+id/au_imgKyn"
@@ -98,7 +98,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgArniel"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/ic_user" />
 
                 <TextView
                     android:id="@+id/au_txtKyn"
@@ -151,7 +151,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgBea"
-                    app:srcCompat="@drawable/img_evan" />
+                    app:srcCompat="@drawable/tm_evan" />
 
                 <TextView
                     android:id="@+id/au_txtEvan"
@@ -176,7 +176,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgEvan"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/tm_gela" />
 
                 <TextView
                     android:id="@+id/au_txtGela"
@@ -199,7 +199,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgRyan"
-                    app:srcCompat="@drawable/user" />
+                    app:srcCompat="@drawable/ic_user" />
 
                 <TextView
                     android:id="@+id/au_txtBea"
@@ -224,7 +224,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_header"
-                    app:srcCompat="@drawable/img_ryan" />
+                    app:srcCompat="@drawable/tm_ryan" />
 
                 <TextView
                     android:id="@+id/au_txtRyan"

@@ -27,6 +27,18 @@
         <item name="color">@color/toolbar_yellow</item>
     </style>
 
+<!--    Evan was doing these //Start//-->
+    <style name="DrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/toolbar_yellow</item>
+    </style>
+
+    <!-- Customize color of navigation drawer icon and back arrow -->
+    <style name="MyTheme" parent="Theme.AppCompat">
+        <item name="android:homeAsUpIndicator">@style/DrawerArrowToggle</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowToggle</item>
+    </style>
+<!--    Evan was doing these //End//-->
+
     <!--Button Colors-->
     <style name="Button.White" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@android:color/white</item>
@@ -39,5 +51,8 @@
         <item name="android:buttonStyle">@style/Button.White</item>
     </style>
 
+    <style name="Normal_Drawable">
+        <item name="android:textSize">16sp</item>
+    </style>
 
 </resources>

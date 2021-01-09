@@ -1,9 +1,8 @@
 package xyz.paypnt.paypoint;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -14,15 +13,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -40,6 +37,7 @@ public class DriverRegister extends AppCompatActivity {
     private StorageReference mStorage;
 
     private EditText reg_txtFName,reg_txtLName,reg_txtPNumber;
+    private Spinner reg_route, reg_type;
 
     private static final int GALLERY_INTENTlicence=1;
     private static final int GALLERY_INTENTid=2;
@@ -61,7 +59,8 @@ public class DriverRegister extends AppCompatActivity {
         reg_txtFName=(EditText)findViewById(R.id.reg_txtFName);
         reg_txtLName=(EditText)findViewById(R.id.reg_txtLName);
         reg_txtPNumber=(EditText)findViewById(R.id.reg_txtPNumber);
-
+        reg_route = (Spinner) findViewById(R.id.reg_spnRoute);
+        reg_type = (Spinner) findViewById(R.id.reg_spnType);
 
         dateView = (EditText) findViewById(R.id.reg_txtBday);
         calendar = Calendar.getInstance();
@@ -69,7 +68,6 @@ public class DriverRegister extends AppCompatActivity {
 
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month+1, day);
 
         Button upLicenses =(Button)findViewById(R.id.reg_uploadLicense);
         upLicenses.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +89,6 @@ public class DriverRegister extends AppCompatActivity {
             }
         });
 
-
-
         Button reg_Submit =(Button)findViewById(R.id.reg_submit);
         reg_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,11 +103,14 @@ public class DriverRegister extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==GALLERY_INTENTlicence && resultCode==RESULT_OK){
-             UriLicense = data.getData();
-
+            UriLicense = data.getData();
+            ((ImageView) findViewById(R.id.reg_dLicenseView)).getLayoutParams().height = ((ImageView) findViewById(R.id.reg_dLicenseView)).getLayoutParams().width;
+            ((ImageView) findViewById(R.id.reg_dLicenseView)).setImageURI(UriLicense);
         }
         if(requestCode==GALLERY_INTENTid && resultCode==RESULT_OK){
             UriID= data.getData();
+            ((ImageView) findViewById(R.id.reg_dIDView)).getLayoutParams().height = ((ImageView) findViewById(R.id.reg_dIDView)).getLayoutParams().width;
+            ((ImageView) findViewById(R.id.reg_dIDView)).setImageURI(UriID);
         }
     }
 
@@ -123,8 +122,8 @@ public class DriverRegister extends AppCompatActivity {
 
 //        Sure daddy :*
 //        -Evan
-
-        if(!reg_txtFName.getText().toString().trim().equals("") && !reg_txtLName.getText().toString().trim().equals("") && !reg_txtPNumber.getText().toString().trim().equals("") && !dateView.getText().toString().trim().equals("")) {
+        ((TextView) findViewById(R.id.reg_error)).setText("");
+        if(!reg_txtFName.getText().toString().trim().equals("") && !reg_txtLName.getText().toString().trim().equals("") && !reg_txtPNumber.getText().toString().trim().equals("") && !dateView.getText().toString().trim().equals("") && reg_route.getSelectedItemPosition() != 0 && reg_type.getSelectedItemPosition() != 0) {
 
             DriverRegisterSetterAndGetter driverRegister = new DriverRegisterSetterAndGetter();
             HashMap<String, Object> dRegister = new HashMap<>();
@@ -132,14 +131,17 @@ public class DriverRegister extends AppCompatActivity {
             dRegister.put("FirstName", reg_txtFName.getText());
             dRegister.put("LastName", reg_txtLName.getText());
             dRegister.put("PlateNumber", reg_txtPNumber.getText());
-            dRegister.put("BirthDay", dateView.getText());
-
+            dRegister.put("Birthday", dateView.getText());
+            dRegister.put("Route", reg_route.getSelectedItem().toString());
+            dRegister.put("Type", reg_type.getSelectedItem().toString());
 
             DatabaseReference driverDBref= fdb.child("Driver Info");
             driverDBref.child("FirstName").setValue(String.valueOf(driverRegister.getDriverRegister().get("FirstName")));
             driverDBref.child("LastName").setValue(String.valueOf(driverRegister.getDriverRegister().get("LastName")));
             driverDBref.child("PlateNumber").setValue(String.valueOf(driverRegister.getDriverRegister().get("PlateNumber")));
-            driverDBref.child("Birthday").setValue(String.valueOf(driverRegister.getDriverRegister().get("BirthDay")));
+            driverDBref.child("Birthday").setValue(String.valueOf(driverRegister.getDriverRegister().get("Birthday")));
+            driverDBref.child("Route").setValue(String.valueOf(driverRegister.getDriverRegister().get("Route")));
+            driverDBref.child("Type").setValue(String.valueOf(driverRegister.getDriverRegister().get("Type")));
 
 
             System.out.println("Clicked");
@@ -149,7 +151,7 @@ public class DriverRegister extends AppCompatActivity {
             StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
             filepathID.putFile(UriID);
         }else{
-
+            ((TextView) findViewById(R.id.reg_error)).setText("Please provide all required data!");
             System.out.println("Error");
         }
 

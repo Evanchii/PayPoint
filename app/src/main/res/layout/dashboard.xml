@@ -112,7 +112,7 @@
                     android:layout_alignParentBottom="true"
                     android:alpha="0.75"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/map" />
+                    app:srcCompat="@drawable/bg_map" />
 
                 <Button
                     android:id="@+id/dashboard_book"
@@ -133,7 +133,7 @@
                     android:layout_centerInParent="true"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    app:srcCompat="@drawable/car" />
+                    app:srcCompat="@drawable/ic_car" />
 
                 <TextView
                     android:id="@+id/textView9"

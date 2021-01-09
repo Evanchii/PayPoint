@@ -9,11 +9,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="-16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/reg_cLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/reg_bday"
@@ -29,6 +32,36 @@
                 app:layout_constraintEnd_toStartOf="@+id/reg_txtBday"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reg_pNumber" />
+
+            <TextView
+                android:id="@+id/reg_route"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/main_font"
+                android:text="Route:"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/reg_txtBday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reg_type" />
+
+            <TextView
+                android:id="@+id/reg_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/main_font"
+                android:text="Type:"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/reg_txtBday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reg_bday" />
 
             <TextView
                 android:id="@+id/reg_pNumber"
@@ -49,16 +82,18 @@
                 android:id="@+id/reg_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/main_font"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="@string/submit"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reg_uploadID" />
+                app:layout_constraintTop_toBottomOf="@+id/reg_dIDView" />
 
             <TextView
                 android:id="@+id/reg_fName"
@@ -93,10 +128,12 @@
             <Button
                 android:id="@+id/reg_uploadID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/main_font"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="@string/upload_file"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
@@ -111,38 +148,44 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/main_font"
+                android:paddingBottom="8dp"
                 android:text="Driver's License:"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/reg_uploadLicense"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reg_bday" />
+                app:layout_constraintTop_toBottomOf="@+id/reg_route" />
 
             <TextView
                 android:id="@+id/reg_ID2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/main_font"
+                android:paddingBottom="8dp"
                 android:text="@string/puv_driver_s_identification_card"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/reg_uploadID"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reg_dLicense" />
+                app:layout_constraintTop_toBottomOf="@+id/reg_dLicenseView" />
 
             <Button
                 android:id="@+id/reg_uploadLicense"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/main_font"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
                 android:text="Upload File"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
@@ -160,6 +203,7 @@
                 android:background="@drawable/txt_roundcorner"
                 android:ems="10"
                 android:hint="@string/first_name"
+                android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:paddingStart="8sp"
                 android:paddingTop="4sp"
@@ -169,8 +213,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/reg_fName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/reg_txtLName"
-                app:layout_constraintTop_toTopOf="@+id/reg_fName"
-                android:importantForAutofill="no" />
+                app:layout_constraintTop_toTopOf="@+id/reg_fName" />
 
             <EditText
                 android:id="@+id/reg_txtLName"
@@ -229,6 +272,40 @@
                 app:layout_constraintStart_toStartOf="@+id/reg_txtBday"
                 app:layout_constraintTop_toTopOf="@+id/reg_pNumber" />
 
+            <Spinner
+                android:id="@+id/reg_spnRoute"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/txt_roundcorner"
+                android:dropDownWidth="wrap_content"
+                android:entries="@array/route_driver"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:popupBackground="@color/white"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toBottomOf="@+id/reg_route"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/reg_txtBday"
+                app:layout_constraintTop_toTopOf="@+id/reg_route" />
+
+            <Spinner
+                android:id="@+id/reg_spnType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/txt_roundcorner"
+                android:dropDownWidth="wrap_content"
+                android:entries="@array/type_of_trans"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:popupBackground="@color/white"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toBottomOf="@+id/reg_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/reg_txtBday"
+                app:layout_constraintTop_toTopOf="@+id/reg_type" />
+
             <Button
                 android:id="@+id/reg_calendar"
                 android:layout_width="40dp"
@@ -241,7 +318,7 @@
                 android:insetBottom="0dp"
                 android:onClick="setDate"
                 app:cornerRadius="10dp"
-                app:icon="@drawable/calendar"
+                app:icon="@drawable/ic_calendar"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:iconSize="20dp"
@@ -250,6 +327,35 @@
                 app:layout_constraintBottom_toBottomOf="@+id/reg_txtBday"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/reg_txtBday" />
+
+            <ImageView
+                android:id="@+id/reg_dLicenseView"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reg_dLicense" />
+
+            <ImageView
+                android:id="@+id/reg_dIDView"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reg_ID2" />
+
+            <TextView
+                android:id="@+id/reg_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/error_red"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reg_dIDView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

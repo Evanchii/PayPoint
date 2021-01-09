@@ -36,7 +36,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/gray_map" />
+                    app:srcCompat="@drawable/bg_gray_map" />
 
                 <ImageView
                     android:id="@+id/main_logo"
@@ -53,7 +53,7 @@
                     android:layout_height="30dp"
                     android:layout_below="@id/main_logo"
                     android:contentDescription="@string/text_logo"
-                    app:srcCompat="@drawable/text_logo_yellow" />
+                    app:srcCompat="@drawable/logo_text_yellow" />
             </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

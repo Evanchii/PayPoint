@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,8 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import xyz.paypnt.paypoint.R;
-import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -83,32 +81,25 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         taxi = (RadioButton) type.findViewById(R.id.map_taxi);
         bus = (RadioButton) type.findViewById(R.id.map_bus);
         next = (Button) findViewById(R.id.map_next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(map_activity.this, String.valueOf(distance) + "km - ma", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(map_activity.this, PriceBreakDown.class)
-                        .putExtra("type", typeSel)
-                        .putExtra("origin", String.valueOf(map_Origin.getText()))
-                        .putExtra("destination", String.valueOf(map_Destination.getText()))
-                        .putExtra("price", (float)priceSel)
-                        .putExtra("distance", (float)distance));
-            }
-        });
 
-        type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == jeep.getId()) {
-                    typeSel = "Jeep";
-                    priceSel = (distance>5) ? ((distance-5)*3)+10 : (float) 10.00;
-                } else if (checkedId == taxi.getId()) {
-                    typeSel = "Taxi";
-                    priceSel = distance*20;
-                } else if (checkedId == bus.getId()) {
-                    typeSel = "Taxi";
-                    priceSel = distance*2;
-                }
+        next.setOnClickListener((View.OnClickListener) v -> startActivity(new Intent(map_activity.this, PriceBreakDown.class)
+                .putExtra("type", typeSel)
+                .putExtra("origin", String.valueOf(map_Origin.getText()))
+                .putExtra("destination", String.valueOf(map_Destination.getText()))
+                .putExtra("price", (float)priceSel)
+                .putExtra("distance", (float)distance)));
+
+        type.setOnCheckedChangeListener((group, checkedId) -> {
+            next.setVisibility(View.VISIBLE);
+            if(checkedId == jeep.getId()) {
+                typeSel = "Jeep";
+                priceSel = (distance>5) ? ((distance-5)*3)+10 : (float) 10.00;
+            } else if (checkedId == taxi.getId()) {
+                typeSel = "Taxi";
+                priceSel = distance*20;
+            } else if (checkedId == bus.getId()) {
+                typeSel = "Taxi";
+                priceSel = distance*2;
             }
         });
     }
@@ -189,11 +180,11 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
             distance = route.distance.value/1000;
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_start_blue))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_end_green))
                     .title(route.endAddress)
                     .position(route.endLocation)));
 
