@@ -4,8 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +19,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -134,6 +138,7 @@ public class DriverRegister extends AppCompatActivity {
             dRegister.put("Birthday", dateView.getText());
             dRegister.put("Route", reg_route.getSelectedItem().toString());
             dRegister.put("Type", reg_type.getSelectedItem().toString());
+            dRegister.put("Status", "Pending");
 
             DatabaseReference driverDBref= fdb.child("Driver Info");
             driverDBref.child("FirstName").setValue(String.valueOf(driverRegister.getDriverRegister().get("FirstName")));
@@ -142,14 +147,23 @@ public class DriverRegister extends AppCompatActivity {
             driverDBref.child("Birthday").setValue(String.valueOf(driverRegister.getDriverRegister().get("Birthday")));
             driverDBref.child("Route").setValue(String.valueOf(driverRegister.getDriverRegister().get("Route")));
             driverDBref.child("Type").setValue(String.valueOf(driverRegister.getDriverRegister().get("Type")));
+            driverDBref.child("Status").setValue(String.valueOf(driverRegister.getDriverRegister().get("Status")));
 
+            ProgressDialog progUp = ProgressDialog.show(this, "Uploading","Please wait as we upload your data to the database.", true);
+            progUp.setCancelable(false);
 
             System.out.println("Clicked");
             StorageReference filepathLicense = mStorage.child("License").child(UriLicense.getLastPathSegment());
             filepathLicense.putFile(UriLicense);
 
             StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
-            filepathID.putFile(UriID);
+            filepathID.putFile(UriID).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progUp.dismiss();
+                    finish();
+                }
+            });
         }else{
             ((TextView) findViewById(R.id.reg_error)).setText("Please provide all required data!");
             System.out.println("Error");

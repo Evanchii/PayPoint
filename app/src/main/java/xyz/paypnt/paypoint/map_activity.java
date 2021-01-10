@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -37,29 +42,24 @@ import java.util.List;
 public class map_activity extends AppCompatActivity implements OnMapReadyCallback,DirectionFinderListener {
 
     private GoogleMap mMap;
-    private EditText map_Origin;
-    private EditText map_Destination;
-    private Button find_Path;
+    private EditText map_Origin, map_Destination;
+    private Button find_Path, next;
     private ProgressDialog progressDialog;
-    private List<Marker> originMarkers = new ArrayList<>();
-    private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Marker> originMarkers = new ArrayList<>(), destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
-    private Button next;
     private RelativeLayout info;
     private RadioButton jeep, taxi, bus;
     private RadioGroup type;
     private String typeSel = "";
     private float priceSel = 0, distance = 0;
+    private FusedLocationProviderClient userLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_activity);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(map_activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
-            return;
-        }
+        userLocation = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment =(SupportMapFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -104,15 +104,21 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap=googleMap;
         // Add a marker in position and move the camera
-        LatLng position = new LatLng(16.049484398586554, 120.33254164793823);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,18));
-        mMap.addMarker(new MarkerOptions().position(position).title("Your position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-        originMarkers.add(mMap.addMarker(new MarkerOptions().title("OPPS").position(position)));
+        userLocation.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null) {
+                    LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,18));
+                    map_Origin.setText(String.format(location.getLatitude() + ", "+location.getLongitude()));
+                }
+            }
+        });
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
