@@ -57,12 +57,13 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot a: snapshot.getChildren()){
-                    String dateTime = String.valueOf(snapshot.child(a.toString()).child("TimeDate").getValue());
-                    System.out.println(a);
-                    System.out.println("walang laman");
-            }
+                for (DataSnapshot a : snapshot.getChildren()) {
+                    String dateTime = a.child("TimeDate").getValue().toString();
+                    System.out.println(dateTime);
 
+
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
