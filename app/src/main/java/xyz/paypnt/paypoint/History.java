@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,15 +53,27 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         Button book = (Button) findViewById(R.id.his_book);
         book.setOnClickListener(v -> startActivity(new Intent(History.this, map_activity.class)));
 
+
+
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String uid= mAuth.getUid().toString();
+        String uid= mAuth.getCurrentUser().getUid();
         System.out.println(uid);
-        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("user").child(uid).child("History");
+        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("History");
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot a : snapshot.getChildren()) {
+
+
+
                     String dateTime = a.child("TimeDate").getValue().toString();
+                    String source = a.child("Source").getValue().toString();
+                    String destination = a.child("Destination").getValue().toString();
+                    String driver = a.child("Driver").getValue().toString();
+                    String type = a.child("Type").getValue().toString();
+                    String price = a.child("Price").getKey().toString();
                     System.out.println(dateTime);
 
 
