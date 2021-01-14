@@ -49,6 +49,28 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
 
         Button book = (Button) findViewById(R.id.his_book);
         book.setOnClickListener(v -> startActivity(new Intent(History.this, map_activity.class)));
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String uid= mAuth.getUid().toString();
+        System.out.println(uid);
+        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("user").child(uid).child("History");
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot a: snapshot.getChildren()){
+                    String dateTime = String.valueOf(snapshot.child(a.toString()).child("TimeDate").getValue());
+                    System.out.println(a);
+                    System.out.println("walang laman");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     @Override

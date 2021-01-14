@@ -49,19 +49,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/fnlBookNow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/main_font"
-                        android:text="Try booking a ride now!"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fnlNothingHere" />
-
                     <Button
                         android:id="@+id/his_book"
                         android:layout_width="wrap_content"
@@ -75,6 +62,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/fnlBookNow" />
+
+                    <TextView
+                        android:id="@+id/fnlBookNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/main_font"
+                        android:text="Try booking a ride now!"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fnlNothingHere" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TableLayout
@@ -125,6 +126,45 @@
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/his_Table"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:id="@+id/his_DateTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="#A3515151"
+                            android:fontFamily="@font/main_font"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"  />
+
+                        <TextView
+                            android:id="@+id/his_Details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="#A3515151"
+                            android:fontFamily="@font/main_font"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"  />
+
+                        <TextView
+                            android:id="@+id/his_Amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="#A3515151"
+                            android:fontFamily="@font/main_font"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"  />
                     </TableRow>
 
                 </TableLayout>
