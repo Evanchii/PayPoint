@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -39,7 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class map_activity extends AppCompatActivity implements OnMapReadyCallback,DirectionFinderListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,DirectionFinderListener {
 
     private GoogleMap mMap;
     private EditText map_Origin, map_Destination;
@@ -57,7 +56,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_activity);
+        setContentView(R.layout.mapactivity);
 
         userLocation = LocationServices.getFusedLocationProviderClient(this);
 
@@ -82,7 +81,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
         bus = (RadioButton) type.findViewById(R.id.map_bus);
         next = (Button) findViewById(R.id.map_next);
 
-        next.setOnClickListener((View.OnClickListener) v -> startActivity(new Intent(map_activity.this, PriceBreakDown.class)
+        next.setOnClickListener((View.OnClickListener) v -> startActivity(new Intent(MapActivity.this, PriceBreakDown.class)
                 .putExtra("type", typeSel)
                 .putExtra("origin", String.valueOf(map_Origin.getText()))
                 .putExtra("destination", String.valueOf(map_Destination.getText()))
@@ -142,7 +141,7 @@ public class map_activity extends AppCompatActivity implements OnMapReadyCallbac
             new DirectionFinder( this, Origin, Destination).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            Toast.makeText(map_activity.this, "An error occurred while fetching API. See logs", Toast.LENGTH_LONG).show();
+            Toast.makeText(MapActivity.this, "An error occurred while fetching API. See logs", Toast.LENGTH_LONG).show();
         }
 
     }

@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PayPoint">
+        <activity android:name=".GetStarted"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -24,7 +25,7 @@
             android:value="@string/map_key" />
 
         <activity
-            android:name=".map_activity"
+            android:name=".MapActivity"
             android:parentActivityName=".Dashboard">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
