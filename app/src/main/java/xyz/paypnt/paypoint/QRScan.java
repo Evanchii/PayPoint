@@ -33,6 +33,7 @@ import com.google.zxing.Result;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -79,11 +80,11 @@ public class QRScan extends AppCompatActivity {
                         dbRef.child(driverUid).child("Balance").setValue((float) userBal + total);
 
                         //add to history
-                        String id = String.valueOf(Calendar.getInstance().getTime());
+                        String id = (new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aa")).format(Calendar.getInstance().getTime());
                         dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("History").child(id);
 
-                        dbRef.child("TimeDate").setValue(id);
-                        dbRef.child("Driver").setValue(driverUid);
+                        dbRef.child("TimeDate").setValue((new SimpleDateFormat("MMM dd, yyyy\nhh:mm:ss aa")).format(Calendar.getInstance().getTime()));
+                        dbRef.child("Driver").setValue(dName.getText().toString().trim() + " ("+pNumber.getText().toString().trim()+")");
                         dbRef.child("Source").setValue(getIntent().getStringExtra("src"));
                         dbRef.child("Destination").setValue(getIntent().getStringExtra("dest"));
                         dbRef.child("Price").setValue((double) total);

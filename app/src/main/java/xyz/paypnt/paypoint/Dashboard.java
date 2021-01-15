@@ -13,11 +13,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,11 +29,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private FirebaseAuth mAuth;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,39 +47,15 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("Dashboard");
         setContentView(R.layout.dashboard);
+//        String id = (new SimpleDateFormat("dd").format(Calendar.getInstance().get)) +"/"+ (new SimpleDateFormat("MM").format(Calendar.getInstance().DAY_OF_MONTH)) + "/"+(new SimpleDateFormat("yyyy").format(Calendar.getInstance().YEAR)) + " "+(Calendar.getInstance().getTime().getTime());
+        String id = (new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aa")).format(Calendar.getInstance().getTime());
+        Log.d(String.valueOf(Dashboard.this), id);
+        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
+        mAuth = FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
 
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                String uName = String.valueOf(snapshot.child("Username").getValue());
-                String balance = String.format("%.2f",snapshot.child("Balance").getValue());
-                TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
-                bal.setText(balance);
-                user.setText("Welcome, "+ uName);
-                System.out.println(uName);
-                if(snapshot.child("Driver Info").child("Status").exists()) {
-                    String status = snapshot.child("Driver Info").child("Status").getValue().toString();
-                    ((TextView) findViewById(R.id.dashboard_status)).setText(status);
-                    ((LinearLayout) findViewById(R.id.dashboard_process)).setVisibility(View.VISIBLE);
-                    if(status.equals("Approved"))
-                        ((Button) findViewById(R.id.dashboard_qr)).setVisibility(View.VISIBLE);
-                    else if(status.equals("Denied"))
-                        ((Button) findViewById(R.id.dashboard_confirmStatus)).setVisibility(View.VISIBLE);
-                }
-                else {
-                    ((LinearLayout) findViewById(R.id.dashboard_apply)).setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        dbRef.addListenerForSingleValueEvent(vel);
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 
@@ -99,6 +81,48 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     }
 
+    private ValueEventListener vel = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            String uName = String.valueOf(snapshot.child("Username").getValue());
+            String balance = String.format("%.2f",Double.parseDouble(snapshot.child("Balance").getValue().toString()));
+            TextView bal = (TextView) findViewById(R.id.dashboard_bal), user = (TextView) findViewById(R.id.dashboard_user);
+            bal.setText(balance);
+            user.setText("Welcome, "+ uName);
+            System.out.println(uName);
+
+            LinearLayout lnrDriver =(LinearLayout) findViewById(R.id.dashboard_driver),
+                    lnrProcess = (LinearLayout) findViewById(R.id.dashboard_process),
+                    lnrAdmin = (LinearLayout) findViewById(R.id.dashboard_admin),
+                    lnrUser = (LinearLayout) findViewById(R.id.dashboard_apply);
+
+            lnrDriver.setVisibility(View.GONE);
+            lnrProcess.setVisibility(View.GONE);
+            lnrAdmin.setVisibility(View.GONE);
+            lnrUser.setVisibility(View.GONE);
+
+            if(snapshot.child("Type").getValue().toString().equals("Driver"))
+                lnrDriver.setVisibility(View.VISIBLE);
+            else if(snapshot.child("Type").getValue().toString().equals("Driver"))
+                lnrAdmin.setVisibility(View.VISIBLE);
+            else if(snapshot.child("Driver Info").child("Status").exists()) {
+                String status = snapshot.child("Driver Info").child("Status").getValue().toString();
+                ((TextView) findViewById(R.id.dashboard_status)).setText(status);
+                lnrProcess.setVisibility(View.VISIBLE);
+                if(status.equals("Approved"))
+                    ((Button) findViewById(R.id.dashboard_qr)).setVisibility(View.VISIBLE);
+                else if(status.equals("Denied"))
+                    ((Button) findViewById(R.id.dashboard_confirmStatus)).setVisibility(View.VISIBLE);
+            }
+            else {
+                lnrUser.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {}
+    };
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
@@ -111,5 +135,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         if(CommonFunctions.menu(this, item, "Dashboard"))
             finish();
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbRef.addListenerForSingleValueEvent(vel);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbRef.removeEventListener(vel);
     }
 }
