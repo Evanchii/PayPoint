@@ -116,6 +116,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 notificationManager.notify(0, builder);
 
             Toast.makeText(this, "Hello?", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(Dashboard.this, QRGenerator.class);
+            startActivity(intent);
         });
     }
 

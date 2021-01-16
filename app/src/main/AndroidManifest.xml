@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PayPoint">
+        <activity android:name=".QRGenerator"></activity>
         <activity android:name=".GetStarted" />
 
         <uses-library
