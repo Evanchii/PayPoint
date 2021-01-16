@@ -60,18 +60,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("Dashboard");
         setContentView(R.layout.dashboard);
-//        String id = (new SimpleDateFormat("dd").format(Calendar.getInstance().get)) +"/"+ (new SimpleDateFormat("MM").format(Calendar.getInstance().DAY_OF_MONTH)) + "/"+(new SimpleDateFormat("yyyy").format(Calendar.getInstance().YEAR)) + " "+(Calendar.getInstance().getTime().getTime());
-        String id = (new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aa")).format(Calendar.getInstance().getTime());
-        Log.d(String.valueOf(Dashboard.this), id);
-        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
 
-        mAuth = FirebaseAuth.getInstance();
-        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
-
-        dbRef.addListenerForSingleValueEvent(vel);
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -80,6 +71,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
+        dbRef.addListenerForSingleValueEvent(vel);
 
         Button dashboard_book=(Button)findViewById(R.id.dashboard_book);
         dashboard_book.setOnClickListener(view -> {
@@ -91,6 +86,15 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         Button reg = (Button) findViewById(R.id.dashboard_register);
         reg.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, DriverRegister.class)));
+
+
+        Button topup = (Button) findViewById(R.id.dashboard_topup);
+        topup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, TopUp.class));
+            }
+        });
 
         createNotificationChannel();
 

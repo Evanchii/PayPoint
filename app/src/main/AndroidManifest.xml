@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PayPoint">
-        <activity android:name=".GetStarted"></activity>
+        <activity android:name=".GetStarted" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -47,6 +47,20 @@
         </activity>
         <activity
             android:name=".DriverRegister"
+            android:parentActivityName=".Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Dashboard" />
+        </activity>
+        <activity
+            android:name=".TopUp"
+            android:parentActivityName=".Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Dashboard" />
+        </activity>
+        <activity
+            android:name=".TopUpVerify"
             android:parentActivityName=".Dashboard">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
