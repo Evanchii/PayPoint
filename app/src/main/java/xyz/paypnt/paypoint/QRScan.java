@@ -87,7 +87,7 @@ public class QRScan extends AppCompatActivity {
                         dbRef.child("Driver").setValue(dName.getText().toString().trim() + " ("+pNumber.getText().toString().trim()+")");
                         dbRef.child("Source").setValue(getIntent().getStringExtra("src"));
                         dbRef.child("Destination").setValue(getIntent().getStringExtra("dest"));
-                        dbRef.child("Price").setValue((double) total);
+                        dbRef.child("Price").setValue((double) total*-1);
                         dbRef.child("Type").setValue(getIntent().getStringExtra("type"));
 
                         Toast.makeText(QRScan.this, "Paid " + dName.getText() + " Php "+String.format("%.2f", total), Toast.LENGTH_LONG).show();
