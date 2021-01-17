@@ -100,6 +100,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         getStarted = (Button) findViewById(R.id.dashboard_getStarted);
         getStarted.setOnClickListener(v -> {
+            /*
             Notification builder = new NotificationCompat.Builder(this, channelPayment)
                     .setSmallIcon(R.drawable.logo_black_inside)
                     .setContentTitle("Received Payment")
@@ -113,12 +114,18 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-                notificationManager.notify(0, builder);
+                notificationManager.notify(0, builder);*/
 
             Toast.makeText(this, "Hello?", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(Dashboard.this, QRGenerator.class);
-            startActivity(intent);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+            else {
+                Intent intent = new Intent(Dashboard.this, GetStarted.class);
+                startActivity(intent);
+            }
+
         });
     }
 

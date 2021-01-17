@@ -32,6 +32,8 @@
     <string name="plate_number_">Plate Number:</string>
     <string name="last_name">Last Name:</string>
     <string name="first_name_">First Name:</string>
+    <string name="get_started">Get Started!</string>
+    <string name="getstarted_desc">One Step left...\n\nDownload and print your QR Code! So your passsengers can scan it!</string>
 
     <string-array name="route_driver">
         <item>Select Route</item>
