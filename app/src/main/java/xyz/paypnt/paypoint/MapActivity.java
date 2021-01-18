@@ -97,7 +97,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 typeSel = "Taxi";
                 priceSel = distance*20;
             } else if (checkedId == bus.getId()) {
-                typeSel = "Taxi";
+                typeSel = "Bus";
                 priceSel = distance*2;
             }
         });

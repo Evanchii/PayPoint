@@ -215,7 +215,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <TextView
                     android:id="@+id/dashboard_procTxt"
@@ -278,29 +278,75 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dashboard_admin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center|center_horizontal|center_vertical"
+                android:foregroundGravity="center"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
-                tools:visibility="gone">
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background">
 
-                <TextView
-                    android:id="@+id/dashboard_adminTxt"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/dashboard_toggle"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableTop="@drawable/ic_dollar"
                     android:fontFamily="@font/main_font"
-                    android:text="Register your\nPUJ/PUV/PUB!"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="24sp" />
+                    android:text="Toggle\nPrice"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/flow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+                <Button
+                    android:id="@+id/dashboard_drivers"
+                    android:layout_width="150dp"
+                    android:layout_height="0dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableTop="@drawable/ic_user"
+                    android:fontFamily="@font/main_font"
+                    android:text="@string/drivers"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dashboard_toggle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/flow"
+                    app:layout_constraintTop_toTopOf="@+id/dashboard_toggle" />
+
+                <Button
+                    android:id="@+id/dashboard_applicants"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/white"
+                    android:drawableTop="@drawable/ic_applicant"
+                    android:fontFamily="@font/main_font"
+                    android:text="@string/applicants"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dashboard_toggle" />
+
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/flow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/dashboard_applicants"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

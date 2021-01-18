@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -37,11 +39,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-/*
-* TO-DO
-* -Create actionbar(?) for QuickActions
-* -Create
-* */
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -55,8 +52,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
+
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("Dashboard");
         setContentView(R.layout.dashboard);
@@ -87,7 +86,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Button reg = (Button) findViewById(R.id.dashboard_register);
         reg.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, DriverRegister.class)));
 
-
         Button topup = (Button) findViewById(R.id.dashboard_topup);
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +94,15 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-        createNotificationChannel();
+        Button price = (Button) findViewById(R.id.dashboard_toggle);
+        Button drivers = (Button) findViewById(R.id.dashboard_drivers);
+        Button applicants = (Button) findViewById(R.id.dashboard_applicants);
+        price.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, TogglePrice.class)));
+        drivers.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Drivers.class)));
+        applicants.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Applicants.class)));
+
+
+//        createNotificationChannel();
 
         getStarted = (Button) findViewById(R.id.dashboard_getStarted);
         getStarted.setOnClickListener(v -> {
@@ -129,19 +135,19 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
-    private void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel paymentchannel = new NotificationChannel(
-                    channelPayment,
-                    "Payment Received",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            paymentchannel.setDescription("Channel for Notifying driver if payment has been received");
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(paymentchannel);
-        }
-    }
+//    private void createNotificationChannel() {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel paymentchannel = new NotificationChannel(
+//                    channelPayment,
+//                    "Payment Received",
+//                    NotificationManager.IMPORTANCE_HIGH
+//            );
+//            paymentchannel.setDescription("Channel for Notifying driver if payment has been received");
+//
+//            NotificationManager manager = getSystemService(NotificationManager.class);
+//            manager.createNotificationChannel(paymentchannel);
+//        }
+//    }
 
     private ValueEventListener vel = new ValueEventListener() {
         @Override
@@ -155,8 +161,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
             LinearLayout lnrDriver =(LinearLayout) findViewById(R.id.dashboard_driver),
                     lnrProcess = (LinearLayout) findViewById(R.id.dashboard_process),
-                    lnrAdmin = (LinearLayout) findViewById(R.id.dashboard_admin),
                     lnrUser = (LinearLayout) findViewById(R.id.dashboard_apply);
+            ConstraintLayout lnrAdmin = (ConstraintLayout) findViewById(R.id.dashboard_admin);
 
             lnrDriver.setVisibility(View.GONE);
             lnrProcess.setVisibility(View.GONE);
@@ -166,7 +172,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
             if(snapshot.child("Type").getValue().toString().equals("Driver"))
                 lnrDriver.setVisibility(View.VISIBLE);
-            else if(snapshot.child("Type").getValue().toString().equals("Driver"))
+            else if(snapshot.child("Type").getValue().toString().equals("Admin"))
                 lnrAdmin.setVisibility(View.VISIBLE);
             else if(snapshot.child("Driver Info").child("Status").exists()) {
                 String status = snapshot.child("Driver Info").child("Status").getValue().toString();
@@ -203,6 +209,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     protected void onResume() {
         super.onResume();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         dbRef.addListenerForSingleValueEvent(vel);
     }
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +22,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterViewHolder>
     //Creates ViewHolder
     @Override
     public MyAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.topup_view_item,parent,false);
         AdapterViewHolder viewHolder=new AdapterViewHolder(v);
         return viewHolder;
     }

@@ -89,7 +89,8 @@
                 android:text="0.0\n0.0"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/pb_total"
@@ -170,7 +171,8 @@
                 android:fontFamily="@font/main_font"
                 android:text="Discounts"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/pb_lblDiscount"
@@ -181,7 +183,8 @@
                 android:fontFamily="@font/main_font"
                 android:text="Student Discount\nSenior Citizen Discount"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/pb_lblTotal"

@@ -199,7 +199,7 @@
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/au_imgRyan"
-                    app:srcCompat="@drawable/ic_user" />
+                    app:srcCompat="@drawable/tm_bea" />
 
                 <TextView
                     android:id="@+id/au_txtBea"
