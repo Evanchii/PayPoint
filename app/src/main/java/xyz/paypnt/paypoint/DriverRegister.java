@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,7 +20,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +69,8 @@ public class DriverRegister extends AppCompatActivity {
         fdb = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Driver");
         mStorage= FirebaseStorage.getInstance().getReference();
+
+
 
         reg_txtFName=(EditText)findViewById(R.id.reg_txtFName);
         reg_txtLName=(EditText)findViewById(R.id.reg_txtLName);
@@ -134,6 +140,7 @@ public class DriverRegister extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==GALLERY_INTENTlicence && resultCode==RESULT_OK){
             UriLicense = data.getData();
+
             ((ImageView) findViewById(R.id.reg_dLicenseView)).getLayoutParams().height = ((ImageView) findViewById(R.id.reg_dLicenseView)).getLayoutParams().width;
             ((ImageView) findViewById(R.id.reg_dLicenseView)).setImageURI(UriLicense);
         }
@@ -165,6 +172,38 @@ public class DriverRegister extends AppCompatActivity {
             dRegister.put("Route", reg_route.getSelectedItem().toString());
             dRegister.put("Type", reg_type.getSelectedItem().toString());
             dRegister.put("Status", "Pending");
+            dRegister.put("UrlLicense",UriLicense);
+            dRegister.put("UrlID",UriID);
+
+
+
+            ProgressDialog progUp = ProgressDialog.show(this, "Uploading","Please wait as we upload your data to the database.", true);
+            progUp.setCancelable(false);
+
+            System.out.println("Clicked");
+            StorageReference filepathLicense = mStorage.child("License").child(UriLicense.getLastPathSegment());
+
+            filepathLicense.putFile(UriLicense).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    dRegister.put("UrlLicense",taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                    progUp.dismiss();
+                    finish();
+                }
+            });
+
+            StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
+            filepathID.putFile(UriID).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    dRegister.put("UrlID",taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                    progUp.dismiss();
+                    finish();
+                }
+
+            });
+
+
 
             DatabaseReference driverDBref= fdb.child("Driver Info");
             driverDBref.child("FirstName").setValue(String.valueOf(driverRegister.getDriverRegister().get("FirstName")));
@@ -174,22 +213,11 @@ public class DriverRegister extends AppCompatActivity {
             driverDBref.child("Route").setValue(String.valueOf(driverRegister.getDriverRegister().get("Route")));
             driverDBref.child("Type").setValue(String.valueOf(driverRegister.getDriverRegister().get("Type")));
             driverDBref.child("Status").setValue(String.valueOf(driverRegister.getDriverRegister().get("Status")));
+            driverDBref.child("UrlLicense").setValue(String.valueOf(driverRegister.getDriverRegister().get("UrlLicense")));
+            driverDBref.child("UrlID").setValue(String.valueOf(driverRegister.getDriverRegister().get("UrlID")));
 
-            ProgressDialog progUp = ProgressDialog.show(this, "Uploading","Please wait as we upload your data to the database.", true);
-            progUp.setCancelable(false);
 
-            System.out.println("Clicked");
-            StorageReference filepathLicense = mStorage.child("License").child(UriLicense.getLastPathSegment());
-            filepathLicense.putFile(UriLicense);
 
-            StorageReference filepathID=mStorage.child("PUB ID").child(UriID.getLastPathSegment());
-            filepathID.putFile(UriID).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    progUp.dismiss();
-                    finish();
-                }
-            });
         }else{
             ((TextView) findViewById(R.id.reg_error)).setText("Please provide all required data!");
             System.out.println("Error");
