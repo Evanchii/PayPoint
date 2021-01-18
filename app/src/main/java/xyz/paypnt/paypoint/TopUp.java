@@ -60,7 +60,7 @@ public class TopUp extends AppCompatActivity {
                         list.get(String.valueOf(position)).add(child.child("Type").getValue().toString());
                         list.get(String.valueOf(position)).add(child.child("Amount").getValue().toString()+" ("+child.child("Status").getValue()+")");
                         list.get(String.valueOf(position++)).add(child.child("Date").getValue().toString());
-                        MyAdapter adapter = new MyAdapter(list,getApplicationContext());
+                        TopUpAdapter adapter = new TopUpAdapter(list,getApplicationContext());
                         trans.setAdapter(adapter);
                     }
                 }

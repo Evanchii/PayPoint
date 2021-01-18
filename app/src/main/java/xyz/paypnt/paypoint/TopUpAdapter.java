@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterViewHolder> {
+public class TopUpAdapter extends RecyclerView.Adapter<TopUpAdapter.AdapterViewHolder> {
 
     HashMap<String, ArrayList<String>> list;
 
-    public MyAdapter(HashMap<String, ArrayList<String>> list, Context context) {
+    public TopUpAdapter(HashMap<String, ArrayList<String>> list, Context context) {
         this.list = list;
     }
 
     //Creates ViewHolder
     @Override
-    public MyAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TopUpAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.topup_view_item,parent,false);
         AdapterViewHolder viewHolder=new AdapterViewHolder(v);
         return viewHolder;
@@ -29,7 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterViewHolder>
 
     //Sets Data of Views
     @Override
-    public void onBindViewHolder(MyAdapter.AdapterViewHolder holder, int position) {
+    public void onBindViewHolder(TopUpAdapter.AdapterViewHolder holder, int position) {
         holder.type.setText(list.get(String.valueOf(position)).get(0));
         holder.amount_status.setText(list.get(String.valueOf(position)).get(1));
         holder.date.setText(list.get(String.valueOf(position)).get(2));

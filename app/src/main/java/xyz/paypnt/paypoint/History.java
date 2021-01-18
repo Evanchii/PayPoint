@@ -92,6 +92,8 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
                     txtDetails.setTextColor(Color.WHITE);
                     txtAmount.setTextColor(Color.WHITE);
 
+
+
                     float scale = getResources().getDisplayMetrics().density;
 
                     txtDateTime.setPadding(0,0, (int) ( 8*scale + 0.5f),0);
