@@ -1,6 +1,7 @@
 package xyz.paypnt.paypoint;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
     //Creates ViewHolder
     @Override
     public Applicants_Adapter.AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.topup_view_item,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.applicants_view_item,parent,false);
         AdapterViewHolder viewHolder=new AdapterViewHolder(v);
         return viewHolder;
     }
@@ -30,8 +31,13 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
     //Sets Data of Views
     @Override
     public void onBindViewHolder(Applicants_Adapter.AdapterViewHolder holder, int position) {
-        holder.uid.setText(list.get(String.valueOf(position)).get(0));
-        holder.username.setText(list.get(String.valueOf(position)).get(1));
+        Log.d("HELLO", holder.uid.getText().toString());
+        holder.uid.setText(list
+                .get(String.valueOf(position))
+                .get(0));
+        holder.username.setText(list
+                .get(String.valueOf(position))
+                .get(1));
     }
 
     //Initializes Views for each iteration of ViewItem
@@ -47,8 +53,8 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
 
         public AdapterViewHolder(View itemView) {
             super(itemView);
-            username = (TextView) itemView.findViewById(R.id.app_uid);
-            uid = (TextView) itemView.findViewById(R.id.app_username);
+            username = (TextView) itemView.findViewById(R.id.app_username_01);
+            uid = (TextView) itemView.findViewById(R.id.app_uid_01);
         }
     }
 }

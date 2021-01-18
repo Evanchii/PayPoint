@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,30 +19,34 @@ import java.util.HashMap;
 
 public class Applicants extends AppCompatActivity {
 
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Applicants");
         setContentView(R.layout.applicants);
+        layoutManager = new LinearLayoutManager(this);
 
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Admin").child("Applicants");
+
+        RecyclerView trans = (RecyclerView) findViewById(R.id.applicants_recyclerView);
+        trans.setLayoutManager(layoutManager);
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HashMap<String, ArrayList<String>> hashMap = new HashMap<String, ArrayList<String>>();
-                int position = 0;
-                for(DataSnapshot a : snapshot.getChildren()) {
-                    hashMap.put(String.valueOf(position), new ArrayList<String>());
-                    hashMap.get(String.valueOf(position)).add(a.getKey());
-                    hashMap.get(String.valueOf(position)).add(a.getValue().toString());
+                HashMap<String, ArrayList<String>> list = new HashMap<String, ArrayList<String>>();
+                if(snapshot.exists()) {
+                    int position = 0;
+                    for (DataSnapshot a : snapshot.getChildren()) {
+                        list.put(String.valueOf(position), new ArrayList<String>());
+                        list.get(String.valueOf(position)).add(a.getKey());
+                        list.get(String.valueOf(position)).add(a.getValue().toString());
+                    }
                 }
-                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.applicants_recyclerView);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Applicants.this);
-
-                recyclerView.setLayoutManager(layoutManager);
-                Applicants_Adapter adapter =new Applicants_Adapter(hashMap,getApplicationContext());
-                recyclerView.setAdapter(adapter);
+                Applicants_Adapter adapter =new Applicants_Adapter(list,getApplicationContext());
+                trans.setAdapter(adapter);
             }
 
             @Override

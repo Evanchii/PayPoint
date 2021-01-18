@@ -8,7 +8,7 @@
     tools:context=".TopUpVerify">
 
     <TextView
-        android:id="@+id/app_username"
+        android:id="@+id/app_username_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/app_username"
+        app:layout_constraintStart_toEndOf="@+id/app_username_01"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
