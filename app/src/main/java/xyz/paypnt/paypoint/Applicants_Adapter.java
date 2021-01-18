@@ -45,7 +45,8 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (new Applicants()).startAct(holder.username.getText().toString());
+                Intent intent = new Intent(v.getContext(),ApplicantInfo.class).putExtra("Applicant UID", holder.uid.getText());
+                v.getContext().startActivity(intent);
             }
         });
     }

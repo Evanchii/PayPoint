@@ -1,11 +1,16 @@
 package xyz.paypnt.paypoint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ApplicantInfo extends AppCompatActivity {
 
@@ -17,10 +22,33 @@ public class ApplicantInfo extends AppCompatActivity {
 
         String AppUID = getIntent().getStringExtra("Applicant UID");
 
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Admin").child("Applicants").child("");
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(AppUID).child("Driver Info");
 
-        /*
-        * Panay fetching of data lang naman to so yeah uwu
-        * */
+        TextView appinfo_Fname = (TextView)findViewById(R.id.appinfo_txtFName);
+        TextView appinfo_Lname = (TextView)findViewById(R.id.appinfo_txtLName);
+        TextView appinfo_PNumber = (TextView)findViewById(R.id.appinfo_txtPNumber);
+        TextView appinfo_Bday = (TextView)findViewById(R.id.appinfo_txtBday);
+        TextView appinfo_spnType = (TextView)findViewById(R.id.appinfo_spnType);
+        TextView appinfo_spnRoute = (TextView)findViewById(R.id.appinfo_spnRoute);
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                appinfo_Fname.setText(snapshot.child("FirstName").getValue().toString());
+                appinfo_Lname.setText(snapshot.child("LastName").getValue().toString());
+                appinfo_PNumber.setText(snapshot.child("PlateNumber").getValue().toString());
+                appinfo_Bday.setText(snapshot.child("Birthday").getValue().toString());
+                appinfo_spnType.setText(snapshot.child("Type").getValue().toString());
+                appinfo_spnRoute.setText(snapshot.child("Route").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 }
