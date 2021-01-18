@@ -45,8 +45,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
-    private static final String channelPayment = "Payment Channel";
-    private NotificationManagerCompat mNotificationManager;
     private Button getStarted;
 
     @Override
@@ -60,6 +58,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         title.setText("Dashboard");
         setContentView(R.layout.dashboard);
 
+        mAuth = FirebaseAuth.getInstance();
+        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
+        dbRef.addListenerForSingleValueEvent(vel);
+        if(mAuth.getCurrentUser() == null) {
+            Toast.makeText(this, "Session has expired. Please log-in again", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Dashboard.this, MainActivity.class));
+        }
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
@@ -70,10 +75,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        mAuth = FirebaseAuth.getInstance();
-        dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
-        dbRef.addListenerForSingleValueEvent(vel);
 
         Button dashboard_book=(Button)findViewById(R.id.dashboard_book);
         dashboard_book.setOnClickListener(view -> {
@@ -97,9 +98,15 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Button price = (Button) findViewById(R.id.dashboard_toggle);
         Button drivers = (Button) findViewById(R.id.dashboard_drivers);
         Button applicants = (Button) findViewById(R.id.dashboard_applicants);
+        Button rejOK = (Button) findViewById(R.id.dashboard_confirmStatus);
         price.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, TogglePrice.class)));
         drivers.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Drivers.class)));
         applicants.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Applicants.class)));
+        rejOK.setOnClickListener((View.OnClickListener) v -> {
+            dbRef.child("Driver Info").removeValue();
+            ((LinearLayout) findViewById(R.id.dashboard_process)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.dashboard_apply)).setVisibility(View.VISIBLE);
+        });
 
 
 //        createNotificationChannel();
@@ -128,6 +135,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
             else {
+                dbRef.child("Driver Info").child("Status").removeValue();
                 Intent intent = new Intent(Dashboard.this, GetStarted.class);
                 startActivity(intent);
             }
@@ -170,19 +178,24 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             lnrUser.setVisibility(View.GONE);
             getStarted.setVisibility(View.GONE);
 
-            if(snapshot.child("Type").getValue().toString().equals("Driver"))
-                lnrDriver.setVisibility(View.VISIBLE);
-            else if(snapshot.child("Type").getValue().toString().equals("Admin"))
-                lnrAdmin.setVisibility(View.VISIBLE);
-            else if(snapshot.child("Driver Info").child("Status").exists()) {
+            if(snapshot.child("Driver Info").child("Status").exists()) {
                 String status = snapshot.child("Driver Info").child("Status").getValue().toString();
                 ((TextView) findViewById(R.id.dashboard_status)).setText(status);
                 lnrProcess.setVisibility(View.VISIBLE);
-                if(status.equals("Approved"))
+                TextView titleProc = (TextView) findViewById(R.id.dashboard_procTxt);
+                if(status.equals("Approved")) {
+                    titleProc.setText("Your Application has been Processed!");
                     getStarted.setVisibility(View.VISIBLE);
-                else if(status.equals("Denied"))
+                }
+                else if(status.equals("Denied")) {
+                    titleProc.setText("Your Application has been Processed!");
                     ((Button) findViewById(R.id.dashboard_confirmStatus)).setVisibility(View.VISIBLE);
+                }
             }
+            else if(snapshot.child("Type").getValue().toString().equals("Driver"))
+                lnrDriver.setVisibility(View.VISIBLE);
+            else if(snapshot.child("Type").getValue().toString().equals("Admin"))
+                lnrAdmin.setVisibility(View.VISIBLE);
             else {
                 lnrUser.setVisibility(View.VISIBLE);
             }

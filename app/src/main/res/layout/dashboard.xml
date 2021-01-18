@@ -215,14 +215,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/dashboard_procTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/main_font"
-                    android:text="You're application is being\nprocessed!"
+                    android:text="Your application is being\nprocessed!"
                     android:textAlignment="center"
                     android:textColor="#fff"
                     android:textSize="24sp" />
@@ -284,10 +284,11 @@
                 android:layout_height="match_parent"
                 android:foregroundGravity="center"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dashboard_background">
+                app:layout_constraintTop_toBottomOf="@+id/dashboard_background"
+                tools:visibility="gone">
 
                 <Button
                     android:id="@+id/dashboard_toggle"

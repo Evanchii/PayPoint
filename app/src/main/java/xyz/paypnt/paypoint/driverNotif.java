@@ -1,9 +1,15 @@
 package xyz.paypnt.paypoint;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class driverNotif extends IntentService {
     //https://developer.android.com/training/run-background-service/create-service
+
+    private static final String channelPayment = "Payment Channel";
+    private NotificationManagerCompat mNotificationManager;
 
     public driverNotif() {
         super("driverNotif");
@@ -27,9 +36,12 @@ public class driverNotif extends IntentService {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid()).child("History");
 
+        createNotificationChannel();
+
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 /*
                 * check for the most recent payment and pass the details to the Notification Generator. If help/code needed, call evan.
                 * 5 details needed. Username of the payer, UID of the payer, amount paid, payer's source, and payer's destination
@@ -46,6 +58,21 @@ public class driverNotif extends IntentService {
                 * Notification Title: Payment Received!
                 */
 
+                Notification builder = new NotificationCompat.Builder(driverNotif.this, channelPayment)
+                        .setSmallIcon(R.drawable.logo_black_inside)
+                        .setContentTitle("Received Payment")
+                        .setContentText("Sample User has paid Php 100.00")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Sample User(UID) has paid Php100.00\nSource: University of Pangasinan\nDestination: Bonuan Tondaligan"))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .build();
+
+                mNotificationManager = NotificationManagerCompat.from(driverNotif.this);
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                notificationManager.notify(0, builder);
+
             }
 
             @Override
@@ -61,5 +88,20 @@ public class driverNotif extends IntentService {
         *
         * This also acts as a confirmation for the payment of the user.
         * */
+
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel paymentchannel = new NotificationChannel(
+                    channelPayment,
+                    "Payment Received",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            paymentchannel.setDescription("Channel for Notifying driver if payment has been received");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(paymentchannel);
+        }
     }
 }

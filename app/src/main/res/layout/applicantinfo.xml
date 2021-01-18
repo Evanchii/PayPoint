@@ -88,7 +88,7 @@
                 android:fontFamily="@font/main_font"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/submit"
+                android:text="@string/accept"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -96,8 +96,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias=".30"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appinfo_dIDView"
-                tools:text="Accept" />
+                app:layout_constraintTop_toBottomOf="@+id/appinfo_dIDView" />
 
             <Button
                 android:id="@+id/appinfo_reject"
@@ -235,6 +234,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/main_font"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/appinfo_route"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -246,6 +247,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/main_font"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/appinfo_type"
                 app:layout_constraintEnd_toEndOf="parent"

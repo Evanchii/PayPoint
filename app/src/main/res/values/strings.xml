@@ -36,6 +36,7 @@
     <string name="getstarted_desc">One Step left…\n\nDownload and print your QR Code! So your passsengers can scan it!</string>
     <string name="applicants">Applicants</string>
     <string name="drivers">Drivers</string>
+    <string name="accept">Accept</string>
 
     <string-array name="route_driver">
         <item>Select Route</item>

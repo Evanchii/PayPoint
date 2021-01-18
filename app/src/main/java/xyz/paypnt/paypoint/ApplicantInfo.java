@@ -3,13 +3,19 @@ package xyz.paypnt.paypoint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,8 +51,6 @@ public class ApplicantInfo extends AppCompatActivity {
         ImageView appinfo_dLicenseView=(ImageView)findViewById(R.id.appinfo_dLicenseView);
         ImageView appinfo_dIDView=(ImageView)findViewById(R.id.appinfo_dIDView);
 
-
-
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -57,45 +61,54 @@ public class ApplicantInfo extends AppCompatActivity {
                 appinfo_spnType.setText(snapshot.child("Type").getValue().toString());
                 appinfo_spnRoute.setText(snapshot.child("Route").getValue().toString());
 
+                String license = snapshot.child("UrlLicense").getValue().toString();
+                String ID = snapshot.child("UrlID").getValue().toString();
 
-
-//                  Error
-                Uri license = Uri.parse(snapshot.child("UrlLicense").getValue().toString());
-//                Uri ID = Uri.parse(snapshot.child("UrlID").getValue().toString());
-
-                mStorageRef.child(String.valueOf(license)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        appinfo_dLicenseView.setImageURI(uri);
-                    }
+                Log.d("uri:",license);
+                StorageReference photoRef = mStorageRef.child(license);
+                final long ONE_MB = 1024*1024;
+                photoRef.getBytes(ONE_MB).addOnSuccessListener(bytes -> {
+                    Bitmap bmpLicense = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    appinfo_dLicenseView.setImageBitmap(bmpLicense);
+                    appinfo_dLicenseView.getLayoutParams().height = appinfo_dLicenseView.getLayoutParams().width;
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(ApplicantInfo.this, "Failed to fetch License photo. See longs", Toast.LENGTH_SHORT).show();
+                    Log.e("photoRef Error", e.toString());
                 });
 
-//                appinfo_dIDView.setImageURI(ID);
-
-
-                System.out.println(snapshot.child("UrlLicense").getValue().toString());
-
+                Log.d("uri:", ID);
+                photoRef = mStorageRef.child(ID);
+                photoRef.getBytes(ONE_MB).addOnSuccessListener(bytes -> {
+                    Bitmap bmpID = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    appinfo_dIDView.setImageBitmap(bmpID);
+                    appinfo_dIDView.getLayoutParams().height = appinfo_dIDView.getLayoutParams().width;
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(ApplicantInfo.this, "Failed to fetch License photo. See longs", Toast.LENGTH_SHORT).show();
+                    Log.e("photoRef Error", e.toString());
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
+
+        DatabaseReference dbRefUID = FirebaseDatabase.getInstance().getReference().child("Users").child(AppUID);
 
         Button appinfo_accept =(Button)findViewById(R.id.appinfo_accept);
         appinfo_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbRef.child("Status").setValue("Approve");
+                dbRefUID.child("Driver Info").child("Status").setValue("Approved");
+                dbRefUID.child("Type").setValue("Driver");
             }
         });
         Button appinfo_reject =(Button)findViewById(R.id.appinfo_reject);
         appinfo_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbRef.child("Status").setValue("Reject");
+                dbRefUID.child("Status").setValue("Reject");
             }
         });
 
