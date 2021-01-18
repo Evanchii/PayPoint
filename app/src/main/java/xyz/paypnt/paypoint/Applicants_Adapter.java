@@ -1,16 +1,20 @@
 package xyz.paypnt.paypoint;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.AdapterViewHolder> {
 
@@ -38,6 +42,12 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
         holder.username.setText(list
                 .get(String.valueOf(position))
                 .get(1));
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                (new Applicants()).startAct(holder.username.getText().toString());
+            }
+        });
     }
 
     //Initializes Views for each iteration of ViewItem
@@ -50,11 +60,14 @@ public class Applicants_Adapter extends RecyclerView.Adapter<Applicants_Adapter.
 
         protected TextView username;
         protected TextView uid;
+        protected LinearLayout layout;
 
         public AdapterViewHolder(View itemView) {
             super(itemView);
             username = (TextView) itemView.findViewById(R.id.app_username_01);
             uid = (TextView) itemView.findViewById(R.id.app_uid_01);
+            layout = (LinearLayout) itemView.findViewById(R.id.app_layout);
+
         }
     }
 }

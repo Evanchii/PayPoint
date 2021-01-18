@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -64,5 +65,9 @@ public class Applicants extends AppCompatActivity {
         * */
 
 
+    }
+
+    public void startAct(String uid) {
+        startActivity(new Intent(Applicants.this, ApplicantInfo.class).putExtra("Applicant UID", uid));
     }
 }
