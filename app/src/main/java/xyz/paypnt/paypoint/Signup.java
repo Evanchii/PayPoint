@@ -85,7 +85,7 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-//                            mAuth.getCurrentUser().sendEmailVerification();
+                            mAuth.getCurrentUser().sendEmailVerification();
                             AlertDialog.Builder confEmail = new AlertDialog.Builder(Signup.this);
                             String userID=mAuth.getCurrentUser().getUid();
                             DatabaseReference signupDbRef = fdb.child(userID);

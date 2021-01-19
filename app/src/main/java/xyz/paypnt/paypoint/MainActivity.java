@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
 //        new AlertDialog.Builder(this).setCancelable(false).setMessage(String.valueOf(Calendar.getInstance().getTime())).setTitle("Date and Time").show();
+        FirebaseApp.initializeApp(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(MainActivity.this, Dashboard.class));
             finish();
         }
+
 
         Button Login, Signup;
         Login = (Button) findViewById(R.id.main_login);

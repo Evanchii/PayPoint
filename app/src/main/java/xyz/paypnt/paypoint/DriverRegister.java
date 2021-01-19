@@ -54,6 +54,7 @@ public class DriverRegister extends AppCompatActivity {
 
     private static final int GALLERY_INTENTlicence=1;
     private static final int GALLERY_INTENTid=2;
+    private String username;
 
     private Uri UriLicense, UriID;
 
@@ -70,7 +71,7 @@ public class DriverRegister extends AppCompatActivity {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Driver");
         mStorage= FirebaseStorage.getInstance().getReference();
 
-
+        username = getIntent().getStringExtra("Username");
 
         reg_txtFName=(EditText)findViewById(R.id.reg_txtFName);
         reg_txtLName=(EditText)findViewById(R.id.reg_txtLName);
@@ -159,6 +160,8 @@ public class DriverRegister extends AppCompatActivity {
 
 //        Sure daddy :*
 //        -Evan
+        DatabaseReference dbRefAdmin = FirebaseDatabase.getInstance().getReference().child("Admin").child("Applicants");
+
         ((TextView) findViewById(R.id.reg_error)).setText("");
         if(!reg_txtFName.getText().toString().trim().equals("") && !reg_txtLName.getText().toString().trim().equals("") && !reg_txtPNumber.getText().toString().trim().equals("") && !dateView.getText().toString().trim().equals("") && reg_route.getSelectedItemPosition() != 0 && reg_type.getSelectedItemPosition() != 0) {
 
@@ -172,10 +175,10 @@ public class DriverRegister extends AppCompatActivity {
             dRegister.put("Route", reg_route.getSelectedItem().toString());
             dRegister.put("Type", reg_type.getSelectedItem().toString());
             dRegister.put("Status", "Pending");
-            dRegister.put("UrlLicense",UriLicense);
-            dRegister.put("UrlID",UriID);
+            dRegister.put("UrlLicense","License/"+UriLicense.getLastPathSegment());
+            dRegister.put("UrlID","PUB ID/"+UriID.getLastPathSegment());
 
-
+            dbRefAdmin.child(mAuth.getUid()).setValue(username);
 
             ProgressDialog progUp = ProgressDialog.show(this, "Uploading","Please wait as we upload your data to the database.", true);
             progUp.setCancelable(false);

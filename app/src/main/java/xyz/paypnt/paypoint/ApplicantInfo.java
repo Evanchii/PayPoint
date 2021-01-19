@@ -3,6 +3,7 @@ package xyz.paypnt.paypoint;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -39,7 +40,8 @@ public class ApplicantInfo extends AppCompatActivity {
 
         String AppUID = getIntent().getStringExtra("Applicant UID");
 
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(AppUID).child("Driver Info");
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(AppUID).child("Driver Info"),
+                dbRefAdmin = FirebaseDatabase.getInstance().getReference().child("Admin").child("Applicants");
 
         TextView appinfo_Fname = (TextView)findViewById(R.id.appinfo_txtFName);
         TextView appinfo_Lname = (TextView)findViewById(R.id.appinfo_txtLName);
@@ -95,6 +97,7 @@ public class ApplicantInfo extends AppCompatActivity {
         });
 
         DatabaseReference dbRefUID = FirebaseDatabase.getInstance().getReference().child("Users").child(AppUID);
+        DatabaseReference dbRefDriverList = FirebaseDatabase.getInstance().getReference().child("Admin").child("Drivers");
 
         Button appinfo_accept =(Button)findViewById(R.id.appinfo_accept);
         appinfo_accept.setOnClickListener(new View.OnClickListener() {
@@ -102,13 +105,33 @@ public class ApplicantInfo extends AppCompatActivity {
             public void onClick(View view) {
                 dbRefUID.child("Driver Info").child("Status").setValue("Approved");
                 dbRefUID.child("Type").setValue("Driver");
+                dbRefAdmin.child(AppUID).removeValue();
+                dbRefDriverList.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int position = 0;
+                        for (DataSnapshot a : snapshot.getChildren())
+                            position = Integer.parseInt(a.getKey())+1;
+                        dbRefDriverList.child(String.format("%03d", position)).setValue(AppUID);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                startActivity(new Intent(ApplicantInfo.this, Applicants.class));
+                finish();
             }
         });
         Button appinfo_reject =(Button)findViewById(R.id.appinfo_reject);
         appinfo_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbRefUID.child("Status").setValue("Reject");
+                dbRefUID.child("Status").setValue("Rejected");
+                dbRefAdmin.child(AppUID).removeValue();
+                startActivity(new Intent(ApplicantInfo.this, Applicants.class));
+                finish();
             }
         });
 

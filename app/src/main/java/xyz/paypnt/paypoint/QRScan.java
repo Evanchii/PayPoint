@@ -73,11 +73,10 @@ public class QRScan extends AppCompatActivity {
                         total = (double) getIntent().getFloatExtra("finalTotal", 0),
                         driverBal = (double) snapshot.child(driverUid).child("Balance").getValue();
 
-//                    Toast.makeText(QRScan.this, data[0]+" "+data[1]+" "+data[2], Toast.LENGTH_LONG).show();
                     if(userBal >= total && total != 0) {
                         codeScanner.releaseResources();
                         dbRef.child(mAuth.getCurrentUser().getUid()).child("Balance").setValue((float) userBal - total);
-                        dbRef.child(driverUid).child("Balance").setValue((float) userBal + total);
+                        dbRef.child(driverUid).child("Balance").setValue((float) driverBal + total);
 
                         //add to history
                         String id = (new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aa")).format(Calendar.getInstance().getTime());
@@ -89,6 +88,14 @@ public class QRScan extends AppCompatActivity {
                         dbRef.child("Destination").setValue(getIntent().getStringExtra("dest"));
                         dbRef.child("Price").setValue((double) total*-1);
                         dbRef.child("Type").setValue(getIntent().getStringExtra("type"));
+
+                        DatabaseReference dbRefDriver = FirebaseDatabase.getInstance().getReference().child("Users").child(driverUid).child("History").child(id);
+                        dbRefDriver.child("TimeDate").setValue((new SimpleDateFormat("MMM dd, yyyy\nhh:mm:ss aa")).format(Calendar.getInstance().getTime()));
+                        dbRefDriver.child("Passenger").setValue(dName.getText().toString().trim() + " ("+pNumber.getText().toString().trim()+")");
+                        dbRefDriver.child("Source").setValue(getIntent().getStringExtra("src"));
+                        dbRefDriver.child("Destination").setValue(getIntent().getStringExtra("dest"));
+                        dbRefDriver.child("Price").setValue((double) total*-1);
+                        dbRefDriver.child("Type").setValue(getIntent().getStringExtra("type"));
 
                         Toast.makeText(QRScan.this, "Paid " + dName.getText() + " Php "+String.format("%.2f", total), Toast.LENGTH_LONG).show();
                         startActivity(new Intent(QRScan.this, Dashboard.class));
@@ -142,16 +149,21 @@ public class QRScan extends AppCompatActivity {
                                 Toast.makeText(QRScan.this, String.valueOf(snapshot.child(result.getText()).exists())+"\n"+
                                         snapshot.child(result.getText()).child("Type").getValue().equals("Driver")+"\n"+
                                         getIntent().getStringExtra("type").equals(snapshot.child(result.getText()).child("Driver Info").child("Type").getValue()), Toast.LENGTH_LONG).show();
-                                if(snapshot.child(result.getText()).exists()
-                                        && snapshot.child(result.getText()).child("Type").getValue().equals("Driver")
-                                        && getIntent().getStringExtra("type").equals(snapshot.child(result.getText()).child("Driver Info").child("Type").getValue())) {
-                                    initStatus.setVisibility(View.GONE);
-                                    details.setVisibility(View.VISIBLE);
-                                    pay.setVisibility(View.VISIBLE);
-                                    driverUid = result.getText();
-                                    String driverName = String.valueOf(snapshot.child(result.getText()).child("Username").getValue());
-                                    dName.setText(driverName);
-                                    pNumber.setText(snapshot.child(result.getText()).child("Driver Info").child("PlateNumber").getValue().toString());
+                                if(snapshot.child(result.getText()).exists() && snapshot.child(result.getText()).child("Type").getValue().equals("Driver")) {
+                                    if(getIntent().getStringExtra("type").equals(snapshot.child(result.getText()).child("Driver Info").child("Type").getValue())) {
+                                        initStatus.setVisibility(View.GONE);
+                                        details.setVisibility(View.VISIBLE);
+                                        pay.setVisibility(View.VISIBLE);
+                                        driverUid = result.getText();
+                                        String driverName = String.valueOf(snapshot.child(result.getText()).child("Username").getValue());
+                                        dName.setText(driverName);
+                                        pNumber.setText(snapshot.child(result.getText()).child("Driver Info").child("PlateNumber").getValue().toString());
+                                    } else {
+                                        initStatus.setText(String.format("Incompatible Driver Type!\n%s", result.getText()));
+                                        initStatus.setVisibility(View.VISIBLE);
+                                        details.setVisibility(View.GONE);
+                                        pay.setVisibility(View.GONE);
+                                    }
                                 } else {
                                     initStatus.setText(String.format("Invalid QR code\n%s", result.getText()));
                                     initStatus.setVisibility(View.VISIBLE);

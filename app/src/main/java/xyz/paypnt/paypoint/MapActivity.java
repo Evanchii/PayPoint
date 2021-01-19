@@ -1,5 +1,6 @@
 package xyz.paypnt.paypoint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -33,6 +34,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -52,11 +58,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String typeSel = "";
     private float priceSel = 0, distance = 0;
     private FusedLocationProviderClient userLocation;
+    private Double priceBus = 0.00, priceJeep = 0.00, priceTaxi = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapactivity);
+
+        String Area = "Dagupan City";
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("Driver").child("Areas").child(Area);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                priceBus = Double.parseDouble(snapshot.child("Bus").getValue().toString());
+                priceJeep = Double.parseDouble(snapshot.child("Jeep").getValue().toString());
+                priceTaxi = Double.parseDouble(snapshot.child("Taxi").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
         userLocation = LocationServices.getFusedLocationProviderClient(this);
 
@@ -92,13 +113,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             next.setVisibility(View.VISIBLE);
             if(checkedId == jeep.getId()) {
                 typeSel = "Jeep";
-                priceSel = (distance>5) ? ((distance-5)*3)+10 : (float) 10.00;
+                priceSel = (distance>5) ? (float) (((distance - 5) * priceJeep) + 10) : (float) 10.00;
             } else if (checkedId == taxi.getId()) {
                 typeSel = "Taxi";
-                priceSel = distance*20;
+                priceSel = (float) (distance*priceTaxi);
             } else if (checkedId == bus.getId()) {
                 typeSel = "Bus";
-                priceSel = distance*2;
+                priceSel = (float) (distance*priceBus);
             }
         });
     }
@@ -207,11 +228,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         info = (RelativeLayout) findViewById(R.id.map_details);
         info.setVisibility(View.VISIBLE);
 
-        jeep.setText("Jeepney\nPhp "+ String.valueOf(String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00)));
-        jeep.setContentDescription(String.valueOf((distance>5) ? ((distance-5)*3)+10 : 10.00));
-        taxi.setText("Taxi\nPhp "+String.valueOf(distance*20));
-        taxi.setContentDescription(String.valueOf(distance*20));
-        bus.setText("Bus\nPhp "+String.valueOf(distance*2));
-        bus.setContentDescription(String.valueOf(distance*2));
+        jeep.setText("Jeepney\nPhp "+ String.valueOf(String.valueOf((distance>5) ? ((distance-5)*priceJeep)+10 : 10.00)));
+        jeep.setContentDescription(String.valueOf((distance>5) ? ((distance-5)*priceJeep)+10 : 10.00));
+        taxi.setText("Taxi\nPhp "+String.valueOf(distance*priceTaxi));
+        taxi.setContentDescription(String.valueOf(distance*priceTaxi));
+        bus.setText("Bus\nPhp "+String.valueOf(distance*priceBus));
+        bus.setContentDescription(String.valueOf(distance*priceBus));
     }
 }

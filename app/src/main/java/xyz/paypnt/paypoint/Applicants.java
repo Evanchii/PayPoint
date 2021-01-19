@@ -67,7 +67,9 @@ public class Applicants extends AppCompatActivity {
 
     }
 
-    public void startAct(String uid) {
-        startActivity(new Intent(Applicants.this, ApplicantInfo.class).putExtra("Applicant UID", uid));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }
