@@ -42,6 +42,14 @@ public class driverNotif extends IntentService {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                String passenger = snapshot.child("Passenger").getValue().toString();
+                String passenger_UID = snapshot.child("PassengerUID").getValue().toString();
+                String price = snapshot.child("Price").getValue().toString();
+                String source = snapshot.child("Source").getValue().toString();
+                String distination = snapshot.child("Destination").getValue().toString();
+
+
+
                 /*
                 * check for the most recent payment and pass the details to the Notification Generator. If help/code needed, call evan.
                 * 5 details needed. Username of the payer, UID of the payer, amount paid, payer's source, and payer's destination
@@ -51,7 +59,7 @@ public class driverNotif extends IntentService {
                 *
                 * Notif Long Desc:
                 * Username(UID) has paid amount.
-                * Source: src
+                * Source:
                 * Destination: dest
                 *
                 * Notification Logo: Please use @drawable/logo_black_inside
@@ -61,9 +69,9 @@ public class driverNotif extends IntentService {
                 Notification builder = new NotificationCompat.Builder(driverNotif.this, channelPayment)
                         .setSmallIcon(R.drawable.logo_black_inside)
                         .setContentTitle("Received Payment")
-                        .setContentText("Sample User has paid Php 100.00")
+                        .setContentText(passenger+" has paid Php "+price+"php")
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Sample User(UID) has paid Php100.00\nSource: University of Pangasinan\nDestination: Bonuan Tondaligan"))
+                                .bigText(passenger_UID+" has paid Php100.00\nSource: "+ source+ "\nDestination:"+ distination))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .build();
 
