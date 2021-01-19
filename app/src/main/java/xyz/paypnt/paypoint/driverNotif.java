@@ -71,7 +71,7 @@ public class driverNotif extends IntentService {
                         .setContentTitle("Received Payment")
                         .setContentText(passenger+" has paid Php "+price+"php")
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(passenger_UID+" has paid Php100.00\nSource: "+ source+ "\nDestination:"+ distination))
+                                .bigText(passenger_UID+" has paid Php"+price+"\nSource: "+ source+ "\nDestination:"+ distination))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .build();
 
