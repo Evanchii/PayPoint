@@ -71,7 +71,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    android:background="@drawable/btn_roundcorner"
+                    android:background="@drawable/cust_btn_roundcorner"
                     android:text="@string/signup"
                     android:textColor="#D6AF08"
                     app:layout_constraintEnd_toEndOf="parent"

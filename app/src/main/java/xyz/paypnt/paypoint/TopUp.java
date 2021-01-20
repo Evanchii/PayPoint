@@ -9,12 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,14 +50,15 @@ public class TopUp extends AppCompatActivity {
                 System.out.print(snapshot.exists());
                 if(snapshot.exists()) {
                     System.out.print("Exists!");
-                    Toast.makeText(TopUp.this, "Run?", Toast.LENGTH_SHORT).show();
+                    ArrayList<String> TopUpKeys = new ArrayList<>();
                     int position = 0;
-                    for(DataSnapshot child : snapshot.getChildren()) {
-                        Log.d("ForEachTopUp","RUNNING");
+                    for(DataSnapshot child : snapshot.getChildren())
+                        TopUpKeys.add(0, child.getKey());
+                    for(String key : TopUpKeys) {
                         list.put(String.valueOf(position), new ArrayList<String>());
-                        list.get(String.valueOf(position)).add(child.child("Type").getValue().toString());
-                        list.get(String.valueOf(position)).add(child.child("Amount").getValue().toString()+" ("+child.child("Status").getValue()+")");
-                        list.get(String.valueOf(position++)).add(child.child("Date").getValue().toString());
+                        list.get(String.valueOf(position)).add(snapshot.child(key).child("Type").getValue().toString());
+                        list.get(String.valueOf(position)).add(snapshot.child(key).child("Amount").getValue().toString()+" ("+snapshot.child(key).child("Status").getValue()+")");
+                        list.get(String.valueOf(position++)).add(snapshot.child(key).child("Date").getValue().toString());
                     }
                         TopUpAdapter adapter = new TopUpAdapter(list,getApplicationContext());
                         trans.setAdapter(adapter);

@@ -97,19 +97,12 @@ public class TogglePrice extends AppCompatActivity {
                 error.setText("");
                 if(!jeep.getText().toString().trim().equals("") && !bus.getText().toString().trim().equals("") && !taxi.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")) {
                     if(confirm.isChecked()) {
-                        mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), password.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Jeep").setValue(Double.parseDouble(jeep.getText().toString().trim()));
-                                dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Taxi").setValue(Double.parseDouble(taxi.getText().toString().trim()));
-                                dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Bus").setValue(Double.parseDouble(bus.getText().toString().trim()));
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                error.setText("Wrong Password!");
-                            }
-                        });
+                        mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), password.getText().toString().trim()).addOnSuccessListener(authResult -> {
+                            dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Jeep").setValue(Double.parseDouble(jeep.getText().toString().trim()));
+                            dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Taxi").setValue(Double.parseDouble(taxi.getText().toString().trim()));
+                            dbRef.child("Areas").child(sItems.getSelectedItem().toString()).child("Bus").setValue(Double.parseDouble(bus.getText().toString().trim()));
+                            finish();
+                        }).addOnFailureListener(e -> error.setText("Wrong Password!"));
                     }
                     else {
                         error.setText("Please Confirm Changes!");

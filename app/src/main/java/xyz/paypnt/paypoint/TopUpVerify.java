@@ -84,7 +84,6 @@ public class  TopUpVerify extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {}
                 });
-//                startActivity(new Intent(TopUpVerify.this, Dashboard.class));
                 finish();
             }
         });

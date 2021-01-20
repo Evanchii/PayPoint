@@ -23,8 +23,6 @@ import xyz.paypnt.paypoint.R;
 public class PriceBreakDown extends AppCompatActivity {
 
     private Button decline, confirm;
-    private float price;
-    private String type, origin,  destination;
     private TextView txtOrigin, txtDestination, txtType, txtDistance, txtDiscount, txtTotal;
 
     @Override

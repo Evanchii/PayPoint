@@ -37,10 +37,8 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference loginDbRef;
-
     private EditText login_email;
     private EditText login_password;
-
     private TextView error;
     private Button login;
     private ProgressDialog dialog;
@@ -56,22 +54,15 @@ public class Login extends AppCompatActivity {
         loginDbRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         error = (TextView) findViewById(R.id.login_error);
-
         login=(Button)findViewById(R.id.login_login);
         login.setOnClickListener(view -> Login());
-
-        login.setOnLongClickListener(v -> {
-            startActivity(new Intent(Login.this, Dashboard.class));
-            finish();
-            return false;
-        });
     }
 
     public void Signup(View view) {
         startActivity(new Intent(Login.this, Signup.class));
         finish();
-        
     }
+
     private void Login(){
         Log.d(String.valueOf(this), "Logging in");
         ScrollView scr = (ScrollView) findViewById(R.id.login_scr);
@@ -91,8 +82,6 @@ public class Login extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.hasChild(userID)){
                                     if(mAuth.getCurrentUser().isEmailVerified()) {
-                                        System.out.println("Welcome Dashboard");
-
                                         startActivity(new Intent(Login.this, Dashboard.class));
                                         dialog.dismiss();
                                         loginDbRef.removeEventListener(this);
@@ -127,7 +116,6 @@ public class Login extends AppCompatActivity {
                     }
                 }
             });
-
         } else {
             System.out.println("Error Empty");
             error.setText("Enter all required data!");
@@ -143,27 +131,12 @@ public class Login extends AppCompatActivity {
         resetDialog.setMessage("Enter your email");
         resetDialog.setView(reset);
 
-        resetDialog.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String email = reset.getText().toString().trim();
-                mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(Login.this, "Password Reset Email sent!", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, "An error has occured!", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-        resetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {}
-        });
+        resetDialog.setPositiveButton("Reset", (dialog, which) -> {
+            String email = reset.getText().toString().trim();
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(Login.this, "Password Reset Email sent!", Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e -> Toast.makeText(Login.this, "An error has occured!", Toast.LENGTH_LONG).show());
+        }).setNegativeButton("Cancel", (dialog, which) -> {});
         resetDialog.create().show();
     }
 }

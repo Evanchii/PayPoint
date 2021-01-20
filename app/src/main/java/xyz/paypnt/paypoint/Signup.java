@@ -81,46 +81,38 @@ public class Signup extends AppCompatActivity {
 
                 System.out.println("VALUE:\t"+signUp);
 
-                mAuth.createUserWithEmailAndPassword(String.valueOf(signUp.get("Email")),String.valueOf(signUp.get("Password"))).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            mAuth.getCurrentUser().sendEmailVerification();
-                            AlertDialog.Builder confEmail = new AlertDialog.Builder(Signup.this);
-                            String userID=mAuth.getCurrentUser().getUid();
-                            DatabaseReference signupDbRef = fdb.child(userID);
-                            signupDbRef.child("Username").setValue(String.valueOf(signUp.get("Username")));
-                            signupDbRef.child("Type").setValue("User");
-                            signupDbRef.child("Balance").setValue(0.001);
+                mAuth.createUserWithEmailAndPassword(String.valueOf(signUp.get("Email")),String.valueOf(signUp.get("Password")))
+                        .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        mAuth.getCurrentUser().sendEmailVerification();
+                        AlertDialog.Builder confEmail = new AlertDialog.Builder(Signup.this);
+                        String userID=mAuth.getCurrentUser().getUid();
+                        DatabaseReference signupDbRef = fdb.child(userID);
+                        signupDbRef.child("Username").setValue(String.valueOf(signUp.get("Username")));
+                        signupDbRef.child("Type").setValue("User");
+                        signupDbRef.child("Balance").setValue(0.001);
 
-                            confEmail.setTitle("We sent you an email")
-                                    .setMessage("Please check your inbox/spam to confirm your email address.")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent= new Intent(Signup.this,Login.class);
-                                            startActivity(intent);
-                                        }
-                                    }).setCancelable(false).show();
-                        }
+                        confEmail.setTitle("We sent you an email")
+                                .setMessage("Please check your inbox/spam to confirm your email address.")
+                                .setPositiveButton("OK", (dialog, which) -> {
+                                    Intent intent= new Intent(Signup.this,Login.class);
+                                    startActivity(intent);
+                                }).setCancelable(false).show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if(e.getMessage().contains("badly formatted")) {
-                            error.setText("Please enter a valid Email Address");
-                        }
-                        else if(e.getMessage().contains("address is in use by another account")) {
-                            error.setText("Email Address is in use by another account!");
-                        }
-                        else if(e.getMessage().contains("6 character")) {
-                            error.setText("Password should be at least 6 characters long");
-                        }
-                        else {
-                            error.setText(e.getMessage());
-                        }
-                        error.setVisibility(View.VISIBLE);
+                }).addOnFailureListener(e -> {
+                    if(e.getMessage().contains("badly formatted")) {
+                        error.setText("Please enter a valid Email Address");
                     }
+                    else if(e.getMessage().contains("address is in use by another account")) {
+                        error.setText("Email Address is in use by another account!");
+                    }
+                    else if(e.getMessage().contains("6 character")) {
+                        error.setText("Password should be at least 6 characters long");
+                    }
+                    else {
+                        error.setText(e.getMessage());
+                    }
+                    error.setVisibility(View.VISIBLE);
                 });
 
             }else {

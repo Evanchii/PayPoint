@@ -72,6 +72,7 @@ public class CommonFunctions extends AppCompatActivity{
             case R.id.action_logOut:
                 mAuth.signOut();
                 i = new Intent(con, MainActivity.class);
+                con.stopService(new Intent(con, driverNotif.class));
                 break;
         }
         if(i!=null) {

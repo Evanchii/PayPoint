@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,8 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.sql.Driver;
 
 public class Drivers extends AppCompatActivity {
 
@@ -31,6 +33,15 @@ public class Drivers extends AppCompatActivity {
 
         DatabaseReference dbRefAdmin = FirebaseDatabase.getInstance().getReference().child("Admin").child("Drivers"),
                 dbRefUser = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        Button applicants = (Button) findViewById(R.id.drivers_applicants);
+        applicants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Drivers.this, Applicants.class));
+                finish();
+            }
+        });
 
         //Uses table?
         /*
@@ -49,81 +60,90 @@ public class Drivers extends AppCompatActivity {
         dbRefAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot a:snapshot.getChildren() ){
-                    CharSequence driver_status = a.getValue().toString();
+                ScrollView scrTable = (ScrollView) findViewById(R.id.drivers_scrTable);
+                LinearLayout lnrNothing = (LinearLayout) findViewById(R.id.drivers_nothing);
+
+                if (snapshot.exists()) {
+                    lnrNothing.setVisibility(View.GONE);
+                    scrTable.setVisibility(View.VISIBLE);
+                    for (DataSnapshot a : snapshot.getChildren()) {
+                        CharSequence driver_status = a.getValue().toString();
+                        dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                    dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                TableLayout tableLayout = (TableLayout) findViewById(R.id.driver_tablelayout);
+                                TableRow row = new TableRow(Drivers.this);
+                                row.setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                                        TableRow.LayoutParams.MATCH_PARENT));
 
+                                CheckBox status = new CheckBox(Drivers.this);
+                                TextView tb_name = new TextView(Drivers.this);
+                                TextView tb_route = new TextView(Drivers.this);
+                                TextView tb_type = new TextView(Drivers.this);
 
-                            TableLayout tableLayout = (TableLayout)findViewById(R.id.driver_tablelayout);
-                            TableRow row = new TableRow(Drivers.this);
-                            row.setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                                    TableRow.LayoutParams.MATCH_PARENT));
+                                System.out.println(driver_status);
 
-                            CheckBox status = new CheckBox(Drivers.this);
-                            TextView tb_name = new TextView(Drivers.this);
-                            TextView tb_route = new TextView(Drivers.this);
-                            TextView tb_type = new TextView(Drivers.this);
+                                String fname = snapshot.child(driver_status.toString()).child("Driver Info").child("FirstName").getValue().toString();
+                                String lname = snapshot.child(driver_status.toString()).child("Driver Info").child("LastName").getValue().toString();
+                                String route = snapshot.child(driver_status.toString()).child("Driver Info").child("Route").getValue().toString();
+                                String type = snapshot.child(driver_status.toString()).child("Driver Info").child("Type").getValue().toString();
 
-                            System.out.println(driver_status);
+                                status.setContentDescription(driver_status);
+                                tb_name.setText(lname + ", " + fname);
+                                tb_route.setText(route);
+                                tb_type.setText(type);
 
-                            String fname = snapshot.child(driver_status.toString()).child("Driver Info").child("FirstName").getValue().toString();
-                            String lname= snapshot.child(driver_status.toString()).child("Driver Info").child("LastName").getValue().toString();
-                            String route = snapshot.child(driver_status.toString()).child("Driver Info").child("Route").getValue().toString();
-                            String type = snapshot.child(driver_status.toString()).child("Driver Info").child("Type").getValue().toString();
-
-                            status.setContentDescription(driver_status);
-                            tb_name.setText(lname+", "+fname);
-                            tb_route.setText(route);
-                            tb_type.setText(type);
-
-                            if(snapshot.child(driver_status.toString()).child("Type").getValue().toString().equals("Driver")){
-                                status.setChecked(true);
-                            }else{
-                                status.setChecked(false);
-                            }
-                            status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                @Override
-                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                                    if(compoundButton.isChecked()){
-                                        dbRefUser.child(driver_status.toString()).child("Type").setValue("Driver");
-                                    }else{
-                                        dbRefUser.child(driver_status.toString()).child("Type").setValue("User");
-
-                                    }
+                                if (snapshot.child(driver_status.toString()).child("Type").getValue().toString().equals("Driver")) {
+                                    status.setChecked(true);
+                                } else {
+                                    status.setChecked(false);
                                 }
-                            });
+                                status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                    @Override
+                                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                        if (compoundButton.isChecked()) {
+                                            dbRefUser.child(driver_status.toString()).child("Type").setValue("Driver");
+                                        } else {
+                                            dbRefUser.child(driver_status.toString()).child("Type").setValue("User");
 
-                            tb_name.setTextColor(Color.WHITE);
-                            tb_route.setTextColor(Color.WHITE);
-                            tb_type.setTextColor(Color.WHITE);
+                                        }
+                                    }
+                                });
 
-                            tb_name.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
-                            tb_route.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
-                            tb_type.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
+                                tb_name.setTextColor(Color.WHITE);
+                                tb_route.setTextColor(Color.WHITE);
+                                tb_type.setTextColor(Color.WHITE);
 
-                            row.addView(status);
-                            row.addView(tb_name);
-                            row.addView(tb_route);
-                            row.addView(tb_type);
+                                tb_name.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
+                                tb_route.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
+                                tb_type.setTypeface(ResourcesCompat.getFont(Drivers.this, R.font.main_font));
 
-                            tableLayout.addView(row);
+                                float scale = getResources().getDisplayMetrics().density;
+
+                                tb_name.setPadding(((int) (8 * scale + 0.5f)), 0, (int) (8 * scale + 0.5f), 0);
+                                tb_route.setPadding(0, 0, (int) (8 * scale + 0.5f), 0);
+                                tb_type.setPadding(0, 0, (int) (2 * scale + 0.5f), 0);
+
+                                tb_type.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                                row.addView(status);
+                                row.addView(tb_name);
+                                row.addView(tb_route);
+                                row.addView(tb_type);
+
+                                tableLayout.addView(row);
 
 
+                            }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
             }
 

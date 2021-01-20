@@ -165,6 +165,19 @@ public class DriverRegister extends AppCompatActivity {
         ((TextView) findViewById(R.id.reg_error)).setText("");
         if(!reg_txtFName.getText().toString().trim().equals("") && !reg_txtLName.getText().toString().trim().equals("") && !reg_txtPNumber.getText().toString().trim().equals("") && !dateView.getText().toString().trim().equals("") && reg_route.getSelectedItemPosition() != 0 && reg_type.getSelectedItemPosition() != 0) {
 
+            String DriverType = "";
+            switch(reg_type.getSelectedItemPosition()) {
+                case 1:
+                    DriverType = "Jeep";
+                    break;
+                case 2:
+                    DriverType = "Taxi";
+                    break;
+                case 3:
+                    DriverType = "Bus";
+                    break;
+            }
+
             DriverRegisterSetterAndGetter driverRegister = new DriverRegisterSetterAndGetter();
             HashMap<String, Object> dRegister = new HashMap<>();
             driverRegister.setDriverRegister(dRegister);
@@ -173,7 +186,7 @@ public class DriverRegister extends AppCompatActivity {
             dRegister.put("PlateNumber", reg_txtPNumber.getText());
             dRegister.put("Birthday", dateView.getText());
             dRegister.put("Route", reg_route.getSelectedItem().toString());
-            dRegister.put("Type", reg_type.getSelectedItem().toString());
+            dRegister.put("Type", DriverType);
             dRegister.put("Status", "Pending");
             dRegister.put("UrlLicense","License/"+UriLicense.getLastPathSegment());
             dRegister.put("UrlID","PUB ID/"+UriID.getLastPathSegment());

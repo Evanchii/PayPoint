@@ -105,7 +105,6 @@ public class ApplicantInfo extends AppCompatActivity {
             public void onClick(View view) {
                 dbRefUID.child("Driver Info").child("Status").setValue("Approved");
                 dbRefUID.child("Type").setValue("Driver");
-                dbRefAdmin.child(AppUID).removeValue();
                 dbRefDriverList.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -120,6 +119,7 @@ public class ApplicantInfo extends AppCompatActivity {
 
                     }
                 });
+                dbRefAdmin.child(AppUID).removeValue();
                 startActivity(new Intent(ApplicantInfo.this, Applicants.class));
                 finish();
             }

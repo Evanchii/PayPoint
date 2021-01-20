@@ -54,10 +54,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar);
-
         TextView title=(TextView)findViewById(R.id.action_bar_title);
         title.setText("Dashboard");
         setContentView(R.layout.dashboard);
+
+        startService(new Intent(this, driverNotif.class));
 
         mAuth = FirebaseAuth.getInstance();
         dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid());
@@ -78,23 +79,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
 
         Button dashboard_book=(Button)findViewById(R.id.dashboard_book);
+        Button reg = (Button) findViewById(R.id.dashboard_register);
+        Button topup = (Button) findViewById(R.id.dashboard_topup);
+
         dashboard_book.setOnClickListener(view -> {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
                 return;
             } else startActivity(new Intent(Dashboard.this, MapActivity.class));
         });
-
-        Button reg = (Button) findViewById(R.id.dashboard_register);
         reg.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, DriverRegister.class).putExtra("Username", username)));
-
-        Button topup = (Button) findViewById(R.id.dashboard_topup);
-        topup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Dashboard.this, TopUp.class));
-            }
-        });
+        topup.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, TopUp.class)));
 
         Button price = (Button) findViewById(R.id.dashboard_toggle);
         Button drivers = (Button) findViewById(R.id.dashboard_drivers);
@@ -105,7 +100,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         price.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, TogglePrice.class)));
         drivers.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Drivers.class)));
         applicants.setOnClickListener(v -> startActivity(new Intent(Dashboard.this, Applicants.class)));
-        rejOK.setOnClickListener((View.OnClickListener) v -> {
+        rejOK.setOnClickListener(v -> {
             dbRef.child("Driver Info").removeValue();
             ((LinearLayout) findViewById(R.id.dashboard_process)).setVisibility(View.GONE);
             ((LinearLayout) findViewById(R.id.dashboard_apply)).setVisibility(View.VISIBLE);
@@ -120,9 +115,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
         getStarted.setOnClickListener(v -> {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
             else {
                 dbRef.child("Driver Info").child("Status").removeValue();
                 Intent intent = new Intent(Dashboard.this, GetStarted.class);
@@ -159,6 +153,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 ((TextView) findViewById(R.id.dashboard_status)).setText(status);
                 lnrProcess.setVisibility(View.VISIBLE);
                 TextView titleProc = (TextView) findViewById(R.id.dashboard_procTxt);
+
                 if(status.equals("Approved")) {
                     titleProc.setText("Your Application has been Processed!");
                     getStarted.setVisibility(View.VISIBLE);
@@ -172,9 +167,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 lnrDriver.setVisibility(View.VISIBLE);
             else if(snapshot.child("Type").getValue().toString().equals("Admin"))
                 lnrAdmin.setVisibility(View.VISIBLE);
-            else {
+            else
                 lnrUser.setVisibility(View.VISIBLE);
-            }
         }
 
         @Override

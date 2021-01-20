@@ -1,5 +1,6 @@
 package xyz.paypnt.paypoint;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,10 +27,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class History extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
 
         new CommonFunctions().fetchHamburgerDetails((NavigationView) findViewById(R.id.navigation_view));
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerButton);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -58,12 +61,18 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         System.out.println(uid);
         DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("History");
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 TableLayout table = (TableLayout) findViewById(R.id.history_tblHistory);
                 if (snapshot.hasChildren())
                     ((ConstraintLayout) findViewById(R.id.history_nothing)).setVisibility(View.GONE);
-                for (DataSnapshot a : snapshot.getChildren()) {
+                else
+                    table.setVisibility(View.GONE);
+                ArrayList<String> HistoryKeys = new ArrayList<>();
+                for(DataSnapshot a : snapshot.getChildren())
+                    HistoryKeys.add(0, a.getKey());
+                for (String key : HistoryKeys) {
                     TableRow row = new TableRow(History.this);
                     row.setLayoutParams(new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.MATCH_PARENT));
@@ -72,33 +81,30 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
                     TextView txtDetails = new TextView(History.this);
                     TextView txtAmount = new TextView(History.this);
 
-                    String dateTime = a.child("TimeDate").getValue().toString();
-                    String source = a.child("Source").getValue().toString();
-                    String destination = a.child("Destination").getValue().toString();
-                    String driver = a.child("Driver").getValue().toString();
-                    String type = a.child("Type").getValue().toString();
-                    String price = a.child("Price").getValue().toString();
-                    System.out.println(dateTime);
+                    String dateTime = snapshot.child(key).child("TimeDate").getValue().toString();
+                    String source = snapshot.child(key).child("Source").getValue().toString();
+                    String destination = snapshot.child(key).child("Destination").getValue().toString();
+                    String driver;
+                    if(snapshot.child(key).child("Driver").exists())
+                        driver = "Driver: " + snapshot.child(key).child("Driver").getValue().toString();
+                    else
+                        driver = "Passenger: " + snapshot.child(key).child("Passenger").getValue().toString();
+                    String type = snapshot.child(key).child("Type").getValue().toString();
+                    String price = snapshot.child(key).child("Price").getValue().toString();
 
                     txtDateTime.setText(dateTime);
-                    txtDetails.setText("Source: "+source+"\nDestination: "+destination+"\nDriver: "+driver+"\nType: "+type);
+                    txtDetails.setText("Source: "+source+"\nDestination: "+destination+"\n"+driver+"\nType: "+type);
                     txtAmount.setText(price);
-
-//                    txtDateTime.setBackgroundColor(Color.parseColor("#A3515151"));
-//                    txtDetails.setBackgroundColor(Color.parseColor("#A3515151"));
-//                    txtAmount.setBackgroundColor(Color.parseColor("#A3515151"));
 
                     txtDateTime.setTextColor(Color.WHITE);
                     txtDetails.setTextColor(Color.WHITE);
                     txtAmount.setTextColor(Color.WHITE);
 
-
-
                     float scale = getResources().getDisplayMetrics().density;
 
-                    txtDateTime.setPadding(0,0, (int) ( 8*scale + 0.5f),0);
+                    txtDateTime.setPadding(((int) ( 8*scale + 0.5f)),0, (int) ( 8*scale + 0.5f),0);
                     txtDetails.setPadding(0,0, (int) ( 8*scale + 0.5f),0);
-                    txtAmount .setPadding(0,0, (int) ( 2*scale + 0.5f),0);
+                    txtAmount.setPadding(0,0, (int) ( 2*scale + 0.5f),0);
 
                     txtDateTime.setTypeface(ResourcesCompat.getFont(History.this, R.font.main_font));
                     txtDetails.setTypeface(ResourcesCompat.getFont(History.this, R.font.main_font));
@@ -108,19 +114,12 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
                     row.addView(txtDetails);
                     row.addView(txtAmount);
 
-                    row.setBackgroundColor(Color.parseColor("#A3757575"));
-
                     table.addView(row);
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
-
-
-
     }
 
     @Override
@@ -129,11 +128,6 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void logout(View view) {
-        startActivity(new Intent(History.this, MainActivity.class));
-        finish();
     }
 
     @Override

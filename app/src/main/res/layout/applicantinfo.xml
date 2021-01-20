@@ -108,7 +108,7 @@
                 android:fontFamily="@font/main_font"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/submit"
+                android:text="Reject"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -116,8 +116,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.72"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appinfo_dIDView"
-                tools:text="Reject" />
+                app:layout_constraintTop_toBottomOf="@+id/appinfo_dIDView" />
 
             <TextView
                 android:id="@+id/appinfo_fName"

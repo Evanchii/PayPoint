@@ -68,11 +68,11 @@ public class Password extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void changePass() {
+        error = (TextView) findViewById(R.id.pass_error);
         error.setVisibility(View.GONE);
         oldPass = (EditText) findViewById(R.id.pass_old);
         newPass = (EditText) findViewById(R.id.pass_new);
         confPass = (EditText) findViewById(R.id.pass_confirm);
-        error = (TextView) findViewById(R.id.pass_error);
 
         mAuth.signInWithEmailAndPassword(mAuth.getCurrentUser().getEmail(), oldPass.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override

@@ -21,9 +21,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.main);
 
-//        new AlertDialog.Builder(this).setCancelable(false).setMessage(String.valueOf(Calendar.getInstance().getTime())).setTitle("Date and Time").show();
-        FirebaseApp.initializeApp(this);
 
+        FirebaseApp.initializeApp(this);
         if (FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(MainActivity.this, Dashboard.class));
             finish();
@@ -41,14 +40,6 @@ public class MainActivity extends AppCompatActivity {
         Signup.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this,Signup.class));
             finish();
-        });
-        Signup.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startActivity(new Intent(MainActivity.this, QRScan.class));
-                finish();
-                return false;
-            }
         });
     }
 }
