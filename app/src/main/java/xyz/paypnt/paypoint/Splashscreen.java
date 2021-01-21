@@ -3,6 +3,9 @@ package xyz.paypnt.paypoint;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,7 +50,7 @@ public class Splashscreen extends AppCompatActivity {
         },2500);
 
         //Animation
-        pin.startAnimation(AnimationUtils.loadAnimation(Splashscreen.this, R.anim.bounce));
+        pin.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
         allLogo.startAnimation(AnimationUtils.loadAnimation(Splashscreen.this, R.anim.fade_in));
         line.startAnimation(AnimationUtils.loadAnimation(Splashscreen.this, R.anim.fade_in));
         car.startAnimation(AnimationUtils.loadAnimation(Splashscreen.this, R.anim.car));

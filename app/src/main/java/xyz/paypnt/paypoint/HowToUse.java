@@ -2,8 +2,11 @@ package xyz.paypnt.paypoint;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HowToUse extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -45,6 +51,14 @@ public class HowToUse extends AppCompatActivity implements NavigationView.OnNavi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ListView insList = (ListView) findViewById(R.id.htu_list);
+        insList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(HowToUse.this, IntroActivity.class).putExtra("position", position));
+            }
+        });
     }
 
     @Override

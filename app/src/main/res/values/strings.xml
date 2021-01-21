@@ -58,4 +58,13 @@
         <item>Taxi/Van - PUV</item>
         <item>Bus - PUB</item>
     </string-array>
+
+    <string-array name="how_to_use">
+        <item>Forgot Password</item>
+        <item>Booking and Payment</item>
+        <item>Top Up balance</item>
+        <item>Changing Password</item>
+        <item>Register as a Driver</item>
+        <item>Contact Us!</item>
+    </string-array>
 </resources>

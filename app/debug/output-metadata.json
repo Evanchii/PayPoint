@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 4,
-      "versionName": "1.19.2021.004-beta",
+      "versionCode": 5,
+      "versionName": "1.20.2021.005-beta",
       "outputFile": "app-debug.apk"
     }
   ]

@@ -27,9 +27,17 @@
 
         <service
             android:name=".driverNotif"
-            android:exported="false"/>
+            android:exported="false" />
 
-        <activity android:name=".ApplicantInfo"
+        <activity
+            android:name=".IntroActivity"
+            android:parentActivityName=".HowToUse">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HowToUse" />
+        </activity>
+        <activity
+            android:name=".ApplicantInfo"
             android:parentActivityName=".Dashboard">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
