@@ -39,6 +39,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/*
+
+PAYPOINT 2020-2021
+Accounts:
+
+User: tneckuser@gmail.com | 123456
+Driver: tneckdriver@gmail.com | 123456
+Admin: tneck2020@gmail.com | 123456
+
+*/
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
