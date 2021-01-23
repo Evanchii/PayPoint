@@ -47,7 +47,7 @@ public class PriceBreakDown extends AppCompatActivity {
         txtDistance = (TextView) findViewById(R.id.pb_distance);
         txtTotal = (TextView) findViewById(R.id.pb_total);
 
-        Toast.makeText(this, String.valueOf(getIntent().getFloatExtra("distance", 0)) + "km - pdb", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, String.valueOf(getIntent().getFloatExtra("distance", 0)) + "km - pdb", Toast.LENGTH_LONG).show();
         txtOrigin.setText(getIntent().getStringExtra("origin"));
         txtDestination.setText(getIntent().getStringExtra("destination"));
         txtType.setText(type);

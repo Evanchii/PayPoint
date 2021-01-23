@@ -57,7 +57,7 @@ public class Applicants extends AppCompatActivity {
                     for (DataSnapshot a : snapshot.getChildren()) {
                         list.put(String.valueOf(position), new ArrayList<String>());
                         list.get(String.valueOf(position)).add(a.getKey());
-                        list.get(String.valueOf(position)).add(a.getValue().toString());
+                        list.get(String.valueOf(position++)).add(a.getValue().toString());
                     }
                 }
                 Applicants_Adapter adapter =new Applicants_Adapter(list,getApplicationContext());

@@ -128,7 +128,7 @@ public class ApplicantInfo extends AppCompatActivity {
         appinfo_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbRefUID.child("Status").setValue("Rejected");
+                dbRefUID.child("Driver Info").child("Status").setValue("Rejected");
                 dbRefAdmin.child(AppUID).removeValue();
                 startActivity(new Intent(ApplicantInfo.this, Applicants.class));
                 finish();
